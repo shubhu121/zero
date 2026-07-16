@@ -1,0 +1,21 @@
+---
+import Base from '../../hubs/dev0/layouts/Base.astro';
+import ToolLayout from '../../hubs/dev0/components/ToolLayout.astro';
+---
+<Base
+  title="Unix Permissions Calculator, 100% local | TabZero"
+  description="Translate chmod octal values to human-readable Unix permissions locally."
+>
+  <ToolLayout name="Unix Permissions Calculator">
+    <div class="max-w-2xl rounded-sm border border-rule bg-raised overflow-hidden">
+      <div class="px-4 py-2.5 border-b border-rule"><span class="label">Octal chmod value</span></div>
+      <div class="p-4 border-b border-rule"><input id="permissions-input" inputmode="numeric" value="755" class="w-full max-w-xs p-3 bg-bg text-2xl font-mono text-ink border border-rule rounded-sm focus:outline-none focus:border-accent" aria-label="Octal chmod value" /></div>
+      <pre id="permissions-output" class="min-h-40 p-4 whitespace-pre-wrap text-sm font-mono text-ink"></pre>
+    </div>
+    <p slot="explainer">Enter a standard three-digit permission mode or a four-digit mode with setuid, setgid, or sticky bits. This is a reference, not a filesystem operation.</p>
+  </ToolLayout>
+</Base>
+<script>
+  import { permissionsSection } from '../../hubs/dev0/scripts/tools/toolbox';
+  permissionsSection();
+</script>

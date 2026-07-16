@@ -1,0 +1,71 @@
+﻿---
+import Base from '../../hubs/dev0/layouts/Base.astro';
+import ToolLayout from '../../hubs/dev0/components/ToolLayout.astro';
+---
+<Base
+  title="JWT Decoder & Verifier - 100% local, no upload | dev0.dev"
+  description="Decode and verify JWTs (HS256/RS256/ES256) entirely in your browser. Tokens and secrets never leave this page."
+>
+  <ToolLayout name="JWT Decoder & Verifier">
+    <div class="space-y-4">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+          <div class="px-4 py-2.5 border-b border-rule flex items-center justify-between">
+            <span class="label">Token</span>
+            <div class="flex items-center gap-2">
+              <span id="jwt-algo-badge" class="text-[10px] font-mono px-1.5 py-0.5 rounded-sm bg-bg text-muted">—</span>
+              <button id="jwt-verify-btn" class="text-[10px] font-medium px-2 py-1 rounded-sm bg-bg border border-accent text-accent transition-colors">Verify</button>
+            </div>
+          </div>
+          <textarea
+            id="jwt-input"
+            class="w-full h-48 p-4 bg-transparent text-sm font-mono text-ink resize-none focus:outline-none placeholder:text-muted"
+            placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+          ></textarea>
+          <div id="jwt-error" class="hidden px-4 py-2 bg-bg border-t border-err text-xs text-err font-mono"></div>
+        </div>
+
+        <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+          <div class="px-4 py-2.5 border-b border-rule flex items-center justify-between">
+            <span class="label">Secret / Public Key</span>
+            <span class="text-[10px] text-muted">optional, only for verify</span>
+          </div>
+          <textarea
+            id="jwt-secret"
+            class="w-full h-48 p-4 bg-transparent text-sm font-mono text-ink resize-none focus:outline-none placeholder:text-muted"
+            placeholder="HMAC secret, or PEM public key for RS256/ES256"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+          <div class="px-4 py-2.5 border-b border-rule">
+            <span class="label">Header</span>
+          </div>
+          <pre id="jwt-header" class="p-4 text-sm font-mono text-ink whitespace-pre-wrap break-all min-h-[80px]">—</pre>
+        </div>
+        <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+          <div class="px-4 py-2.5 border-b border-rule flex items-center justify-between">
+            <span class="label">Payload</span>
+            <div id="jwt-claims" class="flex items-center gap-1.5"></div>
+          </div>
+          <pre id="jwt-payload" class="p-4 text-sm font-mono text-ink whitespace-pre-wrap break-all min-h-[80px]">—</pre>
+        </div>
+      </div>
+
+      <div id="jwt-verify-result" class="hidden rounded-sm border p-3 text-sm"></div>
+    </div>
+
+    <p slot="explainer">
+      Paste a JSON Web Token to decode its header and payload instantly. Add an HMAC
+      secret or a PEM public key to verify the signature - HS256/384/512, RS256 and
+      ES256 are checked with the browser's Web Crypto API. Nothing is sent anywhere;
+      the token and key stay in this tab.
+    </p>
+  </ToolLayout>
+</Base>
+<script>
+  import { jwtSection } from '../../hubs/dev0/scripts/tools/jwt';
+  jwtSection();
+</script>

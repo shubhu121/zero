@@ -1,0 +1,21 @@
+---
+import Base from '../../hubs/dev0/layouts/Base.astro';
+import ToolLayout from '../../hubs/dev0/components/ToolLayout.astro';
+---
+<Base
+  title="HTTP Status Explorer, 100% local | TabZero"
+  description="Look up common HTTP response status codes in a local quick reference."
+>
+  <ToolLayout name="HTTP Status Explorer">
+    <div class="max-w-2xl rounded-sm border border-rule bg-raised overflow-hidden">
+      <div class="px-4 py-2.5 border-b border-rule"><span class="label">HTTP status code</span></div>
+      <div class="p-4 border-b border-rule"><input id="http-status-input" inputmode="numeric" value="429" class="w-full max-w-xs p-3 bg-bg text-2xl font-mono text-ink border border-rule rounded-sm focus:outline-none focus:border-accent" aria-label="HTTP status code" /></div>
+      <pre id="http-status-output" class="min-h-40 p-4 whitespace-pre-wrap text-sm font-mono text-ink"></pre>
+    </div>
+    <p slot="explainer">Search a practical set of frequently encountered HTTP statuses, with their category and a plain-language explanation. No network request is made.</p>
+  </ToolLayout>
+</Base>
+<script>
+  import { httpStatusSection } from '../../hubs/dev0/scripts/tools/toolbox';
+  httpStatusSection();
+</script>

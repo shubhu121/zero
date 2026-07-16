@@ -1,0 +1,32 @@
+---
+import Base from '../../hubs/dev0/layouts/Base.astro';
+import ToolLayout from '../../hubs/dev0/components/ToolLayout.astro';
+---
+<Base
+  title=".gitignore Generator, 100% local | TabZero"
+  description="Generate a practical .gitignore from common local development presets."
+>
+  <ToolLayout name=".gitignore Generator">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+        <div class="px-4 py-2.5 border-b border-rule"><span class="label">Choose presets</span></div>
+        <fieldset class="p-4 space-y-3 text-sm text-ink">
+          <label class="flex items-center gap-3"><input data-gitignore-preset type="checkbox" value="node" checked /> Node.js</label>
+          <label class="flex items-center gap-3"><input data-gitignore-preset type="checkbox" value="python" /> Python</label>
+          <label class="flex items-center gap-3"><input data-gitignore-preset type="checkbox" value="java" /> Java</label>
+          <label class="flex items-center gap-3"><input data-gitignore-preset type="checkbox" value="macos" checked /> macOS</label>
+          <label class="flex items-center gap-3"><input data-gitignore-preset type="checkbox" value="vscode" /> VS Code workspace settings</label>
+        </fieldset>
+      </div>
+      <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+        <div class="px-4 py-2.5 border-b border-rule flex justify-between"><span class="label">.gitignore</span><button id="gitignore-copy" class="text-[10px] font-medium px-2 py-1 rounded-sm bg-bg border border-rule text-ink hover:bg-raised">Copy</button></div>
+        <pre id="gitignore-output" class="min-h-64 p-4 overflow-x-auto whitespace-pre text-sm font-mono text-ink"></pre>
+      </div>
+    </div>
+    <p slot="explainer">Combine the preset entries you need, with duplicate lines removed. The output is a starting point you can paste into a repository's <code>.gitignore</code>.</p>
+  </ToolLayout>
+</Base>
+<script>
+  import { gitignoreSection } from '../../hubs/dev0/scripts/tools/toolbox';
+  gitignoreSection();
+</script>

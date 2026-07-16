@@ -1,0 +1,30 @@
+---
+import Base from '../../hubs/dev0/layouts/Base.astro';
+import ToolLayout from '../../hubs/dev0/components/ToolLayout.astro';
+---
+<Base
+  title="HTML Entity Encoder & Decoder, 100% local | TabZero"
+  description="Encode and decode HTML entities without uploading the text you are working with."
+>
+  <ToolLayout name="HTML Entity Encoder">
+    <div class="flex items-center gap-2 mb-4">
+      <button id="entities-encode" class="text-xs font-medium px-3 py-1.5 rounded-sm bg-bg border border-accent text-accent">Encode</button>
+      <button id="entities-decode" class="text-xs font-medium px-3 py-1.5 rounded-sm bg-bg border border-rule text-ink">Decode</button>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+        <div class="px-4 py-2.5 border-b border-rule"><span class="label">Input</span></div>
+        <textarea id="entities-input" class="w-full h-64 p-4 bg-transparent text-sm font-mono text-ink resize-none focus:outline-none">&lt;main class="app"&gt;Privacy &amp; clarity&lt;/main&gt;</textarea>
+      </div>
+      <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+        <div class="px-4 py-2.5 border-b border-rule flex justify-between"><span class="label">Output</span><button id="entities-copy" class="text-[10px] font-medium px-2 py-1 rounded-sm bg-bg border border-rule text-ink hover:bg-raised">Copy</button></div>
+        <textarea id="entities-output" readonly class="w-full h-64 p-4 bg-transparent text-sm font-mono text-ink resize-none focus:outline-none"></textarea>
+      </div>
+    </div>
+    <p slot="explainer">Encode the five characters that are significant in HTML, or decode named and numeric entities. Conversion happens only in this browser tab.</p>
+  </ToolLayout>
+</Base>
+<script>
+  import { entitiesSection } from '../../hubs/dev0/scripts/tools/toolbox';
+  entitiesSection();
+</script>

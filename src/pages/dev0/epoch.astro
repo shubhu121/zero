@@ -1,0 +1,45 @@
+﻿---
+import Base from '../../hubs/dev0/layouts/Base.astro';
+import ToolLayout from '../../hubs/dev0/components/ToolLayout.astro';
+---
+<Base
+  title="Unix Timestamp Converter - epoch to date, 100% local | dev0.dev"
+  description="Convert unix timestamps to human dates and back. Auto-detects seconds/millis/micros. Works offline. Nothing leaves your browser."
+>
+  <ToolLayout name="Unix Timestamp Converter">
+    <div class="space-y-4">
+      <div class="corner-marks rounded-sm border border-rule bg-raised overflow-hidden">
+        <span class="cm"></span>
+        <div class="px-4 py-2.5 border-b border-rule flex items-center justify-between">
+          <span class="label">Timestamp or date</span>
+          <span id="epoch-unit" class="text-[10px] font-mono px-1.5 py-0.5 rounded-sm bg-bg text-muted">—</span>
+        </div>
+        <textarea
+          id="epoch-input"
+          rows="2"
+          class="w-full p-4 bg-transparent text-lg font-mono text-ink resize-none focus:outline-none placeholder:text-muted"
+          placeholder="1717600000 or 2024-06-05T16:26:40Z"
+        ></textarea>
+        <div class="px-4 py-2.5 border-t border-rule flex items-center justify-between gap-3">
+          <button id="epoch-now" class="text-[11px] font-medium px-2.5 py-1 rounded-sm bg-bg border border-accent text-accent transition-colors">now</button>
+          <span class="text-xs font-mono text-muted">live epoch: <span id="epoch-clock">—</span></span>
+        </div>
+      </div>
+
+      <div id="epoch-results" class="rounded-sm border border-rule bg-raised overflow-hidden px-4 py-4 min-h-[120px]">
+        <p class="text-sm text-muted">waiting for a timestamp…</p>
+      </div>
+    </div>
+
+    <p slot="explainer">
+      Unix time counts the seconds since 1970-01-01 UTC, the epoch most systems use
+      to store an instant in time. Paste a number and this auto-detects whether it's
+      seconds, milliseconds, or microseconds by its digit count (ISO and loose date
+      strings work too). Everything runs in this tab; no timestamp is ever uploaded.
+    </p>
+  </ToolLayout>
+</Base>
+<script>
+  import { epochSection } from '../../hubs/dev0/scripts/tools/epoch';
+  epochSection();
+</script>

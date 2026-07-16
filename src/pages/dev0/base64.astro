@@ -1,0 +1,66 @@
+﻿---
+import Base from '../../hubs/dev0/layouts/Base.astro';
+import ToolLayout from '../../hubs/dev0/components/ToolLayout.astro';
+---
+<Base
+  title="Base64 / URL / Hex Encoder-Decoder, 100% local | dev0.dev"
+  description="Encode and decode Base64, URL-encoding and hex with auto-detect. Nothing is uploaded."
+>
+  <ToolLayout name="Base64 / URL / Hex">
+    <div class="space-y-4">
+      <div class="flex items-center gap-2 flex-wrap">
+        <span class="text-xs text-muted">Mode:</span>
+        <div class="inline-flex bg-raised border border-rule rounded-sm p-0.5">
+          <button data-b64-mode="encode" class="b64-mode-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors">Encode</button>
+          <button data-b64-mode="decode" class="b64-mode-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors">Decode</button>
+          <button data-b64-mode="auto" class="b64-mode-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors bg-bg text-accent">Auto-detect</button>
+        </div>
+        <span class="text-xs text-muted ml-2">Encoding:</span>
+        <div class="inline-flex bg-raised border border-rule rounded-sm p-0.5">
+          <button data-b64-enc="base64" class="b64-enc-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors bg-bg text-accent">Base64</button>
+          <button data-b64-enc="url" class="b64-enc-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors">URL</button>
+          <button data-b64-enc="hex" class="b64-enc-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors">Hex</button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+          <div class="px-4 py-2.5 border-b border-rule flex items-center justify-between">
+            <span class="label" id="b64-input-label">Input</span>
+            <span id="b64-bytes-in" class="text-[10px] font-mono text-muted">0 bytes</span>
+          </div>
+          <textarea
+            id="b64-input"
+            class="w-full h-64 p-4 bg-transparent text-sm font-mono text-ink resize-none focus:outline-none placeholder:text-muted"
+            placeholder='Hello, world!'
+          ></textarea>
+        </div>
+        <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+          <div class="px-4 py-2.5 border-b border-rule flex items-center justify-between">
+            <span class="label" id="b64-output-label">Output</span>
+            <div class="flex items-center gap-2">
+              <span id="b64-bytes-out" class="text-[10px] font-mono text-muted">0 bytes</span>
+              <button id="b64-copy" class="text-[10px] font-medium px-2 py-1 rounded-sm bg-bg border border-rule text-ink hover:bg-raised transition-colors">Copy</button>
+            </div>
+          </div>
+          <textarea
+            id="b64-output"
+            class="w-full h-64 p-4 bg-transparent text-sm font-mono text-ink resize-none focus:outline-none placeholder:text-muted"
+            readonly
+          ></textarea>
+          <div id="b64-error" class="hidden px-4 py-2 bg-bg border-t border-err text-xs text-err font-mono"></div>
+        </div>
+      </div>
+    </div>
+
+    <p slot="explainer">
+      Encode or decode text as Base64, URL-safe Base64 or hex, with an auto-detect
+      mode that guesses what you pasted. Byte counts show the size of input and
+      output. All conversion runs locally in your browser. Nothing is uploaded.
+    </p>
+  </ToolLayout>
+</Base>
+<script>
+  import { b64Section } from '../../hubs/dev0/scripts/tools/b64';
+  b64Section();
+</script>

@@ -1,0 +1,79 @@
+﻿---
+import Base from '../../hubs/dev0/layouts/Base.astro';
+import ToolLayout from '../../hubs/dev0/components/ToolLayout.astro';
+
+const SAMPLE = `CREATE TABLE users (
+  id BIGINT PRIMARY KEY,
+  email VARCHAR(255) NOT NULL,
+  team_id INT REFERENCES teams(id)
+);
+CREATE TABLE teams (
+  id INT PRIMARY KEY,
+  name TEXT
+);
+CREATE TABLE posts (
+  id SERIAL,
+  author_id BIGINT,
+  PRIMARY KEY (id),
+  FOREIGN KEY (author_id) REFERENCES users (id)
+);`;
+---
+<Base
+  title="SQL DDL to ER Diagram - paste CREATE TABLE, 100% local | dev0.dev"
+  description="Paste CREATE TABLE statements and get an entity-relationship diagram instantly. No database connection, no upload."
+>
+  <ToolLayout name="SQL DDL to ER Diagram">
+    <div class="space-y-4">
+      <div class="grid lg:grid-cols-2 gap-4">
+        <!-- DDL input (left) -->
+        <div class="rounded-sm border border-rule bg-raised overflow-hidden flex flex-col">
+          <div class="px-4 py-2.5 border-b border-rule flex items-center justify-between">
+            <span class="label">CREATE TABLE …</span>
+          </div>
+          <textarea
+            id="erd-input"
+            spellcheck="false"
+            autocomplete="off"
+            autocapitalize="off"
+            autocorrect="off"
+            class="w-full h-[28rem] p-4 bg-transparent text-sm font-mono text-ink resize-none focus:outline-none placeholder:text-muted"
+            placeholder="CREATE TABLE users ( id BIGINT PRIMARY KEY );"
+          >{SAMPLE}</textarea>
+        </div>
+
+        <!-- diagram (right) -->
+        <div class="rounded-sm border border-rule bg-raised overflow-hidden flex flex-col">
+          <div class="px-4 py-2.5 border-b border-rule flex items-center justify-between gap-3">
+            <span id="erd-status" class="label truncate">—</span>
+            <div class="flex items-center gap-1.5 shrink-0">
+              <button id="erd-export-svg" class="text-[10px] font-medium px-2 py-1 rounded-sm bg-bg border border-rule text-muted transition-colors">SVG</button>
+              <button id="erd-export-png" class="text-[10px] font-medium px-2 py-1 rounded-sm bg-bg border border-rule text-muted transition-colors">PNG</button>
+            </div>
+          </div>
+          <div
+            id="erd-canvas"
+            class="w-full h-[28rem] bg-bg cursor-grab overflow-hidden select-none"
+            aria-label="Entity-relationship diagram. Drag to pan, scroll to zoom."
+          ></div>
+        </div>
+      </div>
+    </div>
+
+    <p slot="explainer">
+      Paste <span class="font-mono">CREATE TABLE</span> statements and this draws an
+      entity-relationship diagram from them: tables become boxes, and inline
+      <span class="font-mono">REFERENCES</span> / table-level
+      <span class="font-mono">FOREIGN KEY</span> clauses become arrows. The parser is a
+      pragmatic regex/state machine, not a full SQL grammar: it handles common Postgres
+      and MySQL column definitions, primary keys, and foreign keys, but exotic syntax
+      (generated columns, complex CHECK constraints, partitioning) may be skipped rather
+      than diagrammed. Layout is done with <span class="font-mono">dagre</span>; the SVG
+      is rendered here. Drag to pan, scroll to zoom, and export to SVG or PNG. Nothing
+      you paste is ever uploaded. All of this runs in this tab.
+    </p>
+  </ToolLayout>
+</Base>
+<script>
+  import { erdSection } from '../../hubs/dev0/scripts/tools/erd';
+  erdSection();
+</script>

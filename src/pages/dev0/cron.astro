@@ -1,0 +1,56 @@
+﻿---
+import Base from '../../hubs/dev0/layouts/Base.astro';
+import ToolLayout from '../../hubs/dev0/components/ToolLayout.astro';
+---
+<Base
+  title="Cron Expression Parser - next runs + plain English | dev0.dev"
+  description="Parse cron expressions, see the next 10 runs in your timezone, and get a plain-English explanation. Fully offline."
+>
+  <ToolLayout name="Cron Expression Parser">
+    <div class="space-y-4">
+      <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+        <div class="px-4 py-2.5 border-b border-rule flex items-center gap-3">
+          <span class="label">Expression</span>
+          <input
+            id="cron-input"
+            type="text"
+            class="flex-1 bg-transparent text-lg font-mono text-accent focus:outline-none placeholder:text-muted"
+            placeholder="*/15 9-17 * * 1-5"
+          />
+        </div>
+        <div id="cron-error" class="hidden px-4 py-2 bg-bg border-t border-err text-xs text-err font-mono"></div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+          <div class="px-4 py-2.5 border-b border-rule flex items-center justify-between">
+            <span class="label">Next 10 Runs</span>
+            <select id="cron-tz" class="bg-raised border border-rule text-xs text-ink rounded-sm px-2 py-1 focus:outline-none focus:border-accent">
+              <option value="local">Local time</option>
+            </select>
+          </div>
+          <ul id="cron-next" class="divide-y divide-rule text-sm font-mono"></ul>
+        </div>
+        <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+          <div class="px-4 py-2.5 border-b border-rule">
+            <span class="label">Human-Readable</span>
+          </div>
+          <div id="cron-explain" class="p-4 text-sm text-ink min-h-[60px]">—</div>
+        </div>
+      </div>
+    </div>
+
+    <p slot="explainer">
+      Enter a cron expression to see the next ten times it will fire, in your local
+      timezone, UTC, or any IANA zone, plus a plain-English summary of the schedule.
+      Supports standard 5-field cron (minute, hour, day-of-month, month, day-of-week),
+      named <code>@</code>-aliases (<code>@daily</code>, <code>@hourly</code>,
+      <code>@weekly</code>, …), and 6-field expressions with a leading seconds field.
+      Everything is computed in your browser; nothing is uploaded.
+    </p>
+  </ToolLayout>
+</Base>
+<script>
+  import { cronSection } from '../../hubs/dev0/scripts/tools/cron';
+  cronSection();
+</script>

@@ -1,0 +1,58 @@
+---
+import Base from '../../hubs/dev0/layouts/Base.astro';
+import ToolLayout from '../../hubs/dev0/components/ToolLayout.astro';
+---
+<Base
+  title="Text & Code Diff Checker, 100% local | dev0.dev"
+  description="Compare two blocks of text or code line by line, with added/removed highlighting. Ignore whitespace or case. Nothing is uploaded."
+>
+  <ToolLayout name="Diff Checker">
+    <div class="space-y-4">
+      <div class="flex items-center gap-2 flex-wrap">
+        <button id="diff-ws" aria-pressed="false" class="px-3 py-1 text-xs font-medium rounded-sm border border-rule text-muted transition-colors">Ignore whitespace</button>
+        <button id="diff-case" aria-pressed="false" class="px-3 py-1 text-xs font-medium rounded-sm border border-rule text-muted transition-colors">Ignore case</button>
+        <span id="diff-summary" class="ml-auto text-xs font-mono text-muted"></span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+          <div class="px-4 py-2.5 border-b border-rule"><span class="label">Original</span></div>
+          <textarea
+            id="diff-a"
+            class="w-full h-56 p-4 bg-transparent text-sm font-mono text-ink resize-none focus:outline-none placeholder:text-muted"
+            placeholder="Paste the original text…"
+            spellcheck="false"
+          ></textarea>
+        </div>
+        <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+          <div class="px-4 py-2.5 border-b border-rule"><span class="label">Changed</span></div>
+          <textarea
+            id="diff-b"
+            class="w-full h-56 p-4 bg-transparent text-sm font-mono text-ink resize-none focus:outline-none placeholder:text-muted"
+            placeholder="Paste the changed text…"
+            spellcheck="false"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+        <div class="px-4 py-2.5 border-b border-rule"><span class="label">Unified diff</span></div>
+        <div id="diff-out" class="text-sm font-mono leading-relaxed py-2 overflow-x-auto"></div>
+      </div>
+    </div>
+
+    <p slot="explainer">
+      Paste two versions of a file, config or snippet to see a line-by-line
+      unified diff: <span class="text-ok">added</span> lines in green,
+      <span class="text-err">removed</span> lines in red, unchanged lines dimmed.
+      The comparison uses a longest-common-subsequence algorithm, so it lines up
+      moved blocks sensibly rather than just comparing row-for-row. Toggle
+      "ignore whitespace" or "ignore case" to focus on meaningful changes. Both
+      inputs stay in your browser — nothing is uploaded.
+    </p>
+  </ToolLayout>
+</Base>
+<script>
+  import { diffSection } from '../../hubs/dev0/scripts/tools/diff';
+  diffSection();
+</script>

@@ -1,0 +1,26 @@
+---
+import Base from '../../hubs/dev0/layouts/Base.astro';
+import ToolLayout from '../../hubs/dev0/components/ToolLayout.astro';
+---
+<Base
+  title="Text Case Converter, 100% local | TabZero"
+  description="Turn text into camel case, snake case, kebab case, and more entirely locally."
+>
+  <ToolLayout name="Text Case Converter">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+        <div class="px-4 py-2.5 border-b border-rule"><span class="label">Input</span></div>
+        <textarea id="case-input" class="w-full h-64 p-4 bg-transparent text-sm font-mono text-ink resize-none focus:outline-none">tab zero browser tools</textarea>
+      </div>
+      <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+        <div class="px-4 py-2.5 border-b border-rule flex justify-between"><span class="label">Variants</span><button id="case-copy" class="text-[10px] font-medium px-2 py-1 rounded-sm bg-bg border border-rule text-ink hover:bg-raised">Copy</button></div>
+        <pre id="case-output" class="min-h-64 p-4 whitespace-pre-wrap text-sm font-mono text-ink"></pre>
+      </div>
+    </div>
+    <p slot="explainer">Words are detected from spaces, punctuation, and existing camel-case boundaries. The converter keeps Unicode letters and digits intact.</p>
+  </ToolLayout>
+</Base>
+<script>
+  import { caseSection } from '../../hubs/dev0/scripts/tools/toolbox';
+  caseSection();
+</script>

@@ -1,0 +1,65 @@
+---
+import Base from '../../hubs/dev0/layouts/Base.astro';
+import ToolLayout from '../../hubs/dev0/components/ToolLayout.astro';
+---
+<Base
+  title="SHA-256 / SHA-1 / SHA-512 Hash Generator, 100% local | dev0.dev"
+  description="Generate SHA-1, SHA-256, SHA-384 and SHA-512 hashes from text, as hex or Base64, in your browser via Web Crypto. Nothing is uploaded."
+>
+  <ToolLayout name="SHA Hash Generator">
+    <div class="space-y-4">
+      <div class="flex items-center gap-2 flex-wrap">
+        <span class="text-xs text-muted">Algorithm:</span>
+        <div class="inline-flex bg-raised border border-rule rounded-sm p-0.5">
+          <button data-hash-algo="SHA-1" class="hash-algo-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors text-muted">SHA-1</button>
+          <button data-hash-algo="SHA-256" class="hash-algo-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors bg-bg text-accent">SHA-256</button>
+          <button data-hash-algo="SHA-384" class="hash-algo-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors text-muted">SHA-384</button>
+          <button data-hash-algo="SHA-512" class="hash-algo-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors text-muted">SHA-512</button>
+        </div>
+        <span class="text-xs text-muted ml-2">Output:</span>
+        <div class="inline-flex bg-raised border border-rule rounded-sm p-0.5">
+          <button data-hash-enc="hex" class="hash-enc-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors bg-bg text-accent">Hex</button>
+          <button data-hash-enc="base64" class="hash-enc-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors text-muted">Base64</button>
+        </div>
+      </div>
+
+      <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+        <div class="px-4 py-2.5 border-b border-rule flex items-center justify-between">
+          <span class="label">Input text</span>
+          <span id="hash-bytes-in" class="text-[10px] font-mono text-muted">0 bytes</span>
+        </div>
+        <textarea
+          id="hash-input"
+          class="w-full h-44 p-4 bg-transparent text-sm font-mono text-ink resize-none focus:outline-none placeholder:text-muted"
+          placeholder="Type or paste text to hash…"
+          spellcheck="false"
+        ></textarea>
+      </div>
+
+      <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+        <div class="px-4 py-2.5 border-b border-rule flex items-center justify-between">
+          <span class="label">Digest</span>
+          <div class="flex items-center gap-2">
+            <span id="hash-len" class="text-[10px] font-mono text-muted"></span>
+            <button id="hash-copy" class="text-[10px] font-medium px-2 py-1 rounded-sm bg-bg border border-rule text-ink hover:bg-raised transition-colors">Copy</button>
+          </div>
+        </div>
+        <div id="hash-output" class="p-4 text-sm font-mono text-accent break-all min-h-[3rem] select-all"></div>
+        <div id="hash-error" class="hidden px-4 py-2 border-t border-err text-xs text-err font-mono"></div>
+      </div>
+    </div>
+
+    <p slot="explainer">
+      Generate a cryptographic hash of any text using SHA-1, SHA-256, SHA-384 or
+      SHA-512, shown as lowercase hex or Base64. Hashing happens in your browser
+      through the Web Crypto API (<code>crypto.subtle.digest</code>) — the input
+      never leaves the page, so it's safe for secrets and tokens. Note: MD5 is
+      intentionally omitted because it is cryptographically broken and the Web
+      Crypto API does not provide it.
+    </p>
+  </ToolLayout>
+</Base>
+<script>
+  import { hashSection } from '../../hubs/dev0/scripts/tools/hash';
+  hashSection();
+</script>

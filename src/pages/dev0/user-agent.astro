@@ -1,0 +1,26 @@
+---
+import Base from '../../hubs/dev0/layouts/Base.astro';
+import ToolLayout from '../../hubs/dev0/components/ToolLayout.astro';
+---
+<Base
+  title="User Agent Inspector, 100% local | TabZero"
+  description="Identify browser, rendering engine, operating system, and device type from a user agent locally."
+>
+  <ToolLayout name="User Agent Inspector">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+        <div class="px-4 py-2.5 border-b border-rule"><span class="label">User agent</span></div>
+        <textarea id="ua-input" class="w-full h-64 p-4 bg-transparent text-sm font-mono text-ink resize-none focus:outline-none" placeholder="Paste a user agent string"></textarea>
+      </div>
+      <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+        <div class="px-4 py-2.5 border-b border-rule"><span class="label">Parsed result</span></div>
+        <pre id="ua-output" class="min-h-64 p-4 whitespace-pre-wrap text-sm font-mono text-ink"></pre>
+      </div>
+    </div>
+    <p slot="explainer">The current browser's user agent is prefilled, or paste a captured value to inspect it. Parsing uses a small local set of recognizers and does not contact a user-agent service.</p>
+  </ToolLayout>
+</Base>
+<script>
+  import { userAgentSection } from '../../hubs/dev0/scripts/tools/toolbox';
+  userAgentSection();
+</script>

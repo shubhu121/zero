@@ -1,0 +1,72 @@
+﻿---
+import Base from '../../hubs/dev0/layouts/Base.astro';
+
+const tools = [
+  { href: '/dev0/jwt', name: 'JWT Decoder & Verifier', desc: 'Decode and verify JWTs (HS256/RS256/ES256) in the browser.' },
+  { href: '/dev0/regex', name: 'Regex Tester', desc: 'Live match highlighting, capture groups and explanations.' },
+  { href: '/dev0/cron', name: 'Cron Expression Parser', desc: 'Next 10 runs in your timezone, plus plain English.' },
+  { href: '/dev0/base64', name: 'Base64 / URL / Hex', desc: 'Encode and decode with auto-detect and byte counts.' },
+  { href: '/dev0/epoch', name: 'Epoch / Unix Time', desc: 'Convert between Unix timestamps and human dates.' },
+  { href: '/dev0/json-to-types', name: 'JSON to Types', desc: 'Generate TypeScript types and more from a JSON sample.' },
+  { href: '/dev0/jq', name: 'jq Playground', desc: 'Run jq filters over JSON, entirely client-side.' },
+  { href: '/dev0/erd', name: 'ERD from SQL', desc: 'Turn CREATE TABLE statements into an entity diagram.' },
+  { href: '/dev0/uuid', name: 'UUID Generator', desc: 'Generate and inspect UUIDs (v4, v7 and friends).' },
+  { href: '/dev0/cert', name: 'Certificate Inspector', desc: 'Decode and inspect X.509 / PEM certificates.' },
+  { href: '/dev0/json', name: 'JSON Formatter & Validator', desc: 'Beautify, minify, validate and sort JSON with error locations.' },
+  { href: '/dev0/hash', name: 'SHA Hash Generator', desc: 'SHA-1/256/384/512 of text, as hex or Base64.' },
+  { href: '/dev0/diff', name: 'Diff Checker', desc: 'Line-by-line diff of two text or code blocks.' },
+  { href: '/dev0/query', name: 'Query String Parser', desc: 'Decode, inspect, and normalize URL query parameters.' },
+  { href: '/dev0/entities', name: 'HTML Entity Encoder', desc: 'Encode or decode named and numeric HTML entities.' },
+  { href: '/dev0/case', name: 'Text Case Converter', desc: 'Make camel, snake, kebab, constant, and title case.' },
+  { href: '/dev0/unicode', name: 'Unicode Inspector', desc: 'See code points, decimal values, and UTF-8 bytes.' },
+  { href: '/dev0/permissions', name: 'Unix Permissions', desc: 'Translate chmod octal values to symbolic permissions.' },
+  { href: '/dev0/mime', name: 'MIME Type Lookup', desc: 'Find a common MIME type from a filename or extension.' },
+  { href: '/dev0/http-status', name: 'HTTP Status Explorer', desc: 'Look up a practical reference of common HTTP responses.' },
+  { href: '/dev0/user-agent', name: 'User Agent Inspector', desc: 'Identify browser, engine, operating system, and device.' },
+  { href: '/dev0/env', name: '.env Inspector', desc: 'Find variables, malformed lines, and duplicate keys locally.' },
+  { href: '/dev0/gitignore', name: '.gitignore Generator', desc: 'Build a starter ignore file from common stack presets.' },
+];
+---
+<Base
+  title="dev0 - browser dev tools, nothing leaves this page"
+  description="A directory of fast, client-side developer tools: JWT, regex, cron, base64 and more. Everything runs in your browser; nothing is ever uploaded."
+>
+  <div class="fade-in">
+    <section class="max-w-2xl">
+      <h1 class="display text-4xl sm:text-6xl tracking-tight leading-[1.05]">
+        Browser dev tools.<br />
+        <span class="text-accent">Nothing leaves this page.</span>
+      </h1>
+      <p class="label mt-5">100% client-side · 0 trackers · 0 cookies · verify in DevTools → Network</p>
+    </section>
+
+    <section class="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-px bg-rule border border-rule rounded overflow-hidden">
+      {tools.map((t, i) => (
+        <a
+          href={t.href}
+          class:list={["group bg-bg p-5 hover:bg-raised transition-colors", tools.length % 2 === 1 && i === tools.length - 1 && "sm:col-span-2"]}
+        >
+          <div class="flex items-baseline justify-between gap-2">
+            <span class="font-semibold text-ink group-hover:text-accent transition-colors">{t.name}</span>
+            <span class="label text-muted group-hover:text-accent transition-colors">→</span>
+          </div>
+          <p class="mt-1 text-sm text-muted leading-relaxed">{t.desc}</p>
+        </a>
+      ))}
+    </section>
+
+    <section class="mt-12 border-t border-rule pt-6 max-w-2xl text-sm text-muted leading-relaxed">
+      <h2 class="label text-ink">Why dev0?</h2>
+      <p class="mt-2">Most online dev utilities (JWT decoders, regex testers, cert inspectors) are
+      SaaS pages that can log whatever you paste. That's a problem when the thing you're debugging is
+      a production token, a customer payload, or a private key. dev0 runs every tool in your browser:
+      nothing is uploaded, there are no accounts, and you can confirm zero network activity in
+      DevTools → Network. One real URL per tool, so each is easy to bookmark and share.</p>
+    </section>
+  </div>
+
+  <script is:inline>
+    const m = location.hash.match(/^#\/(jwt|regex|cron|b64)$/);
+    if (m) location.replace('/dev0/' + (m[1] === 'b64' ? 'base64' : m[1]));
+  </script>
+</Base>

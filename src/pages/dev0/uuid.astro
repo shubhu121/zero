@@ -1,0 +1,68 @@
+﻿---
+import Base from '../../hubs/dev0/layouts/Base.astro';
+import ToolLayout from '../../hubs/dev0/components/ToolLayout.astro';
+---
+<Base
+  title="UUID & ULID Generator + Timestamp Decoder, 100% local | dev0.dev"
+  description="Generate UUID v4/v7 in bulk and decode the embedded timestamp from UUIDv7 and ULID. Runs entirely in your browser."
+>
+  <ToolLayout name="UUID & ULID Toolbox">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <!-- Generate panel -->
+      <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+        <div class="px-4 py-2.5 border-b border-rule flex items-center justify-between">
+          <span class="label">Generate</span>
+        </div>
+        <div class="px-4 py-3 border-b border-rule flex flex-wrap items-center gap-3">
+          <select
+            id="uuid-kind"
+            class="text-sm font-mono px-2 py-1 rounded-sm bg-bg border border-rule text-ink focus:outline-none focus:border-accent"
+          >
+            <option value="v4">UUID v4 (random)</option>
+            <option value="v7">UUID v7 (time-ordered)</option>
+          </select>
+          <input
+            id="uuid-count"
+            type="number"
+            min="1"
+            max="1000"
+            value="5"
+            class="w-20 text-sm font-mono px-2 py-1 rounded-sm bg-bg border border-rule text-ink focus:outline-none focus:border-accent"
+          />
+          <button id="uuid-gen" class="text-[11px] font-medium px-2.5 py-1 rounded-sm bg-bg border border-accent text-accent transition-colors">Generate</button>
+          <button id="uuid-copyall" class="text-[11px] font-medium px-2.5 py-1 rounded-sm bg-bg border border-rule text-muted transition-colors ml-auto">copy all</button>
+        </div>
+        <div id="uuid-list" class="min-h-[140px] max-h-[360px] overflow-y-auto"></div>
+      </div>
+
+      <!-- Decode panel -->
+      <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+        <div class="px-4 py-2.5 border-b border-rule flex items-center justify-between">
+          <span class="label">Decode</span>
+          <span id="uuid-kind-badge" class="text-[10px] font-mono px-1.5 py-0.5 rounded-sm bg-bg text-muted">—</span>
+        </div>
+        <input
+          id="uuid-decode-input"
+          type="text"
+          class="w-full p-4 bg-transparent text-sm font-mono text-ink focus:outline-none placeholder:text-muted border-b border-rule"
+          placeholder="018fe5b2-0400-7000-8000-000000000000 or a ULID"
+        />
+        <div id="uuid-decode-time" class="px-4 py-4 min-h-[100px]">
+          <p class="text-sm text-muted">paste an id to inspect it…</p>
+        </div>
+      </div>
+    </div>
+
+    <p slot="explainer">
+      UUID v4 is fully random; UUID v7 and ULID prefix a 48-bit Unix-millisecond
+      timestamp, so they sort by creation time and you can read that instant straight
+      back out of the id. Paste one into the decoder to see it. UUID v4 carries no
+      time, so there is nothing to decode. Generation and decoding both run entirely
+      in this tab; no id is ever uploaded.
+    </p>
+  </ToolLayout>
+</Base>
+<script>
+  import { uuidSection } from '../../hubs/dev0/scripts/tools/uuid';
+  uuidSection();
+</script>

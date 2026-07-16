@@ -1,0 +1,17 @@
+/* dev0 — minimal design tokens. Semantic vars only; components never use raw hex. */
+:root, [data-theme="paper"] {
+  --bg: #ffffff; --bg-raised: #f6f6f7;
+  --ink: #18181b; --muted: #6b6b74;
+  --accent: #2563eb; --accent-ink: #ffffff;
+  --rule: rgba(24, 24, 27, 0.12); --rule-strong: #18181b;
+  --ok: #16a34a; --warn: #b45309; --err: #dc2626;
+}
+[data-theme="nocturne"] {
+  --bg: #0a0a0b; --bg-raised: #161618;
+  --ink: #f4f4f5; --muted: #a1a1aa;
+  --accent: #60a5fa; --accent-ink: #0a0a0b;
+  --rule: rgba(244, 244, 245, 0.14); --rule-strong: #f4f4f5;
+  --ok: #4ade80; --warn: #fbbf24; --err: #f87171;
+}
+html { background: var(--bg); color: var(--ink); scrollbar-gutter: stable; }
+::selection { background: var(--accent); color: var(--accent-ink); }

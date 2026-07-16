@@ -1,0 +1,62 @@
+﻿---
+import Base from '../../hubs/dev0/layouts/Base.astro';
+import ToolLayout from '../../hubs/dev0/components/ToolLayout.astro';
+---
+<Base
+  title="JSON to TypeScript / Zod / Pydantic / Go, 100% local | dev0.dev"
+  description="Paste JSON, get TypeScript interfaces, Zod schemas, Python dataclasses or Go structs. Runs entirely in your browser. No upload."
+>
+  <ToolLayout name="JSON to Types">
+    <div class="space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div id="jt-targets" class="flex flex-wrap items-center gap-1.5"></div>
+        <label class="flex items-center gap-2 text-xs text-muted">
+          <span class="label">Top-level name</span>
+          <input
+            id="jt-name"
+            value="Root"
+            spellcheck="false"
+            class="w-32 px-2 py-1 rounded-sm bg-raised border border-rule text-sm font-mono text-ink focus:outline-none focus:border-accent"
+          />
+        </label>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-4">
+        <!-- input -->
+        <div class="rounded-sm border border-rule bg-raised overflow-hidden flex flex-col">
+          <div class="px-4 py-2.5 border-b border-rule flex items-center justify-between">
+            <span class="label">JSON</span>
+          </div>
+          <textarea
+            id="jt-input"
+            spellcheck="false"
+            class="w-full h-96 p-4 bg-transparent text-sm font-mono text-ink resize-none focus:outline-none placeholder:text-muted"
+            placeholder="{ &quot;hello&quot;: &quot;world&quot; }"
+          ></textarea>
+          <div id="jt-error" class="hidden px-4 py-2 bg-bg border-t border-err text-xs text-err font-mono"></div>
+        </div>
+
+        <!-- output -->
+        <div class="rounded-sm border border-rule bg-raised overflow-hidden flex flex-col">
+          <div class="px-4 py-2.5 border-b border-rule flex items-center justify-between gap-3">
+            <span id="jt-status" class="label truncate">—</span>
+            <button id="jt-copy" class="text-[10px] font-medium px-2 py-1 rounded-sm bg-bg border border-rule text-muted shrink-0 transition-colors">copy</button>
+          </div>
+          <pre id="jt-output" class="w-full h-96 p-4 overflow-auto text-sm font-mono text-ink whitespace-pre transition-opacity"></pre>
+        </div>
+      </div>
+    </div>
+
+    <p slot="explainer">
+      This uses <span class="font-mono">quicktype</span> compiled to run in your browser:
+      it infers a schema from the JSON you paste and emits TypeScript interfaces, Zod
+      schemas, Python dataclasses, or Go structs. The generator is a ~1.5 MB bundle, so
+      it's fetched lazily on your first generate and then cached. Nothing you paste is
+      ever uploaded. The work happens entirely in this tab.
+    </p>
+  </ToolLayout>
+</Base>
+<script>
+  import { jsonTypesSection } from '../../hubs/dev0/scripts/tools/jsontypes';
+  jsonTypesSection();
+</script>

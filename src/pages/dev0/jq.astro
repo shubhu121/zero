@@ -1,0 +1,68 @@
+﻿---
+import Base from '../../hubs/dev0/layouts/Base.astro';
+import ToolLayout from '../../hubs/dev0/components/ToolLayout.astro';
+---
+<Base
+  title="jq Playground - test jq filters online, 100% local | dev0.dev"
+  description="Run jq filters against JSON in your browser via WebAssembly. No server, no upload, unlike jqplay."
+>
+  <ToolLayout name="jq Playground">
+    <div class="space-y-4">
+      <!-- filter (full width, on top) -->
+      <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+        <div class="px-4 py-2.5 border-b border-rule flex items-center justify-between">
+          <span class="label">filter</span>
+        </div>
+        <input
+          id="jq-filter"
+          spellcheck="false"
+          autocomplete="off"
+          autocapitalize="off"
+          autocorrect="off"
+          class="w-full px-4 py-3 bg-transparent text-sm font-mono text-ink resize-none focus:outline-none placeholder:text-muted"
+          placeholder=".users[] | {name, email}"
+        />
+        <div id="jq-filter-error" class="hidden px-4 py-2 bg-bg border-t border-err text-xs text-err font-mono whitespace-pre-wrap"></div>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-4">
+        <!-- JSON input (left) -->
+        <div class="rounded-sm border border-rule bg-raised overflow-hidden flex flex-col">
+          <div class="px-4 py-2.5 border-b border-rule flex items-center justify-between">
+            <span class="label">JSON</span>
+            <button id="jq-sample" class="text-[10px] font-medium px-2 py-1 rounded-sm bg-bg border border-rule text-muted shrink-0 transition-colors">sample</button>
+          </div>
+          <textarea
+            id="jq-json"
+            spellcheck="false"
+            class="w-full h-96 p-4 bg-transparent text-sm font-mono text-ink resize-none focus:outline-none placeholder:text-muted"
+            placeholder="{ &quot;hello&quot;: &quot;world&quot; }"
+          ></textarea>
+          <div id="jq-json-error" class="hidden px-4 py-2 bg-bg border-t border-err text-xs text-err font-mono whitespace-pre-wrap"></div>
+        </div>
+
+        <!-- output (right) -->
+        <div class="rounded-sm border border-rule bg-raised overflow-hidden flex flex-col">
+          <div class="px-4 py-2.5 border-b border-rule flex items-center justify-between gap-3">
+            <span id="jq-status" class="label truncate">—</span>
+            <button id="jq-copy" class="text-[10px] font-medium px-2 py-1 rounded-sm bg-bg border border-rule text-muted shrink-0 transition-colors">copy</button>
+          </div>
+          <pre id="jq-output" class="w-full h-96 p-4 overflow-auto text-sm font-mono text-ink whitespace-pre transition-opacity"></pre>
+        </div>
+      </div>
+    </div>
+
+    <p slot="explainer">
+      This runs <span class="font-mono">jq</span>, the actual C program, compiled to
+      WebAssembly via <span class="font-mono">jq-web</span>, not a JavaScript
+      reimplementation. Your filter is evaluated against the JSON entirely in this tab:
+      no server, nothing uploaded. The wasm engine is ~2.7 MB, fetched lazily on first
+      run and cached afterwards. Unlike <span class="font-mono">jqplay</span>, the JSON
+      you paste never leaves your machine.
+    </p>
+  </ToolLayout>
+</Base>
+<script>
+  import { jqSection } from '../../hubs/dev0/scripts/tools/jq';
+  jqSection();
+</script>

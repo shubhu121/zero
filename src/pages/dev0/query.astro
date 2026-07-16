@@ -1,0 +1,28 @@
+---
+import Base from '../../hubs/dev0/layouts/Base.astro';
+import ToolLayout from '../../hubs/dev0/components/ToolLayout.astro';
+---
+<Base
+  title="Query String Parser & Normalizer, 100% local | TabZero"
+  description="Inspect, decode, and normalize URL query strings locally in your browser."
+>
+  <ToolLayout name="Query String Parser">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+        <div class="px-4 py-2.5 border-b border-rule"><span class="label">URL or query string</span></div>
+        <textarea id="query-input" class="w-full h-64 p-4 bg-transparent text-sm font-mono text-ink resize-none focus:outline-none placeholder:text-muted" placeholder="https://example.com/search?q=privacy&sort=newest#results">https://example.com/search?q=privacy&sort=newest&tag=browser+tools</textarea>
+      </div>
+      <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+        <div class="px-4 py-2.5 border-b border-rule"><span class="label">Decoded parameters</span></div>
+        <pre id="query-output" class="min-h-40 p-4 whitespace-pre-wrap text-sm font-mono text-ink"></pre>
+        <div class="px-4 py-2.5 border-y border-rule flex items-center justify-between"><span class="label">Normalized</span><button id="query-copy" class="text-[10px] font-medium px-2 py-1 rounded-sm bg-bg border border-rule text-ink hover:bg-raised">Copy</button></div>
+        <pre id="query-normalized" class="min-h-14 p-4 whitespace-pre-wrap break-all text-sm font-mono text-muted"></pre>
+      </div>
+    </div>
+    <p slot="explainer">Paste a full URL or only the portion after the question mark. Repeated keys are retained in their original order, and normalization uses standard URL query encoding.</p>
+  </ToolLayout>
+</Base>
+<script>
+  import { querySection } from '../../hubs/dev0/scripts/tools/toolbox';
+  querySection();
+</script>

@@ -1,0 +1,26 @@
+---
+import Base from '../../hubs/dev0/layouts/Base.astro';
+import ToolLayout from '../../hubs/dev0/components/ToolLayout.astro';
+---
+<Base
+  title="Unicode Inspector, 100% local | TabZero"
+  description="Inspect code points and UTF-8 bytes for any text, entirely in your browser."
+>
+  <ToolLayout name="Unicode Inspector">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+        <div class="px-4 py-2.5 border-b border-rule"><span class="label">Text</span></div>
+        <textarea id="unicode-input" class="w-full h-64 p-4 bg-transparent text-sm font-mono text-ink resize-none focus:outline-none">TabZero → 你好 👋</textarea>
+      </div>
+      <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+        <div class="px-4 py-2.5 border-b border-rule"><span class="label">Character · code point · decimal · UTF-8</span></div>
+        <pre id="unicode-output" class="min-h-64 p-4 overflow-x-auto whitespace-pre text-sm font-mono text-ink"></pre>
+      </div>
+    </div>
+    <p slot="explainer">Each visible character is treated as one Unicode code point, including astral characters such as emoji. UTF-8 bytes are displayed in hexadecimal.</p>
+  </ToolLayout>
+</Base>
+<script>
+  import { unicodeSection } from '../../hubs/dev0/scripts/tools/toolbox';
+  unicodeSection();
+</script>

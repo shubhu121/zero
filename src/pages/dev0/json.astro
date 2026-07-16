@@ -1,0 +1,70 @@
+---
+import Base from '../../hubs/dev0/layouts/Base.astro';
+import ToolLayout from '../../hubs/dev0/components/ToolLayout.astro';
+---
+<Base
+  title="JSON Formatter & Validator, 100% local | dev0.dev"
+  description="Beautify, minify, validate and sort JSON in your browser. Precise error locations, byte counts. Nothing is uploaded."
+>
+  <ToolLayout name="JSON Formatter & Validator">
+    <div class="space-y-4">
+      <div class="flex items-center gap-2 flex-wrap">
+        <div class="inline-flex bg-raised border border-rule rounded-sm p-0.5">
+          <button data-json-mode="format" class="json-mode-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors bg-bg text-accent">Beautify</button>
+          <button data-json-mode="minify" class="json-mode-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors text-muted">Minify</button>
+        </div>
+        <label class="text-xs text-muted ml-1">Indent:
+          <select id="json-indent" class="ml-1 bg-raised border border-rule rounded-sm px-2 py-1 text-xs font-mono text-ink focus:outline-none">
+            <option value="2">2 spaces</option>
+            <option value="4">4 spaces</option>
+            <option value="tab">Tab</option>
+          </select>
+        </label>
+        <button id="json-sort" aria-pressed="false" class="px-3 py-1 text-xs font-medium rounded-sm border border-rule text-muted transition-colors">Sort keys</button>
+        <span id="json-status" class="ml-auto text-xs font-mono"></span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+          <div class="px-4 py-2.5 border-b border-rule flex items-center justify-between">
+            <span class="label">Input</span>
+            <span id="json-bytes-in" class="text-[10px] font-mono text-muted">0 bytes</span>
+          </div>
+          <textarea
+            id="json-input"
+            class="w-full h-72 p-4 bg-transparent text-sm font-mono text-ink resize-none focus:outline-none placeholder:text-muted"
+            placeholder='{"hello":"world"}'
+            spellcheck="false"
+          ></textarea>
+        </div>
+        <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+          <div class="px-4 py-2.5 border-b border-rule flex items-center justify-between">
+            <span class="label">Output</span>
+            <div class="flex items-center gap-2">
+              <span id="json-bytes-out" class="text-[10px] font-mono text-muted">0 bytes</span>
+              <button id="json-copy" class="text-[10px] font-medium px-2 py-1 rounded-sm bg-bg border border-rule text-ink hover:bg-raised transition-colors">Copy</button>
+            </div>
+          </div>
+          <textarea
+            id="json-output"
+            class="w-full h-72 p-4 bg-transparent text-sm font-mono text-ink resize-none focus:outline-none"
+            readonly
+          ></textarea>
+        </div>
+      </div>
+      <div id="json-error" class="hidden px-4 py-2 rounded-sm bg-raised border border-err text-xs text-err font-mono"></div>
+    </div>
+
+    <p slot="explainer">
+      Paste JSON to validate and pretty-print it with 2-space, 4-space or tab
+      indentation, or minify it to a single line. Invalid JSON shows the exact
+      line and column of the first error. "Sort keys" recursively alphabetises
+      object keys for stable diffs. All parsing runs locally in your browser —
+      nothing is uploaded, so it's safe for production payloads.
+    </p>
+  </ToolLayout>
+</Base>
+<script>
+  import { jsonSection } from '../../hubs/dev0/scripts/tools/json';
+  jsonSection();
+</script>
