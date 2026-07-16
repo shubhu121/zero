@@ -1,0 +1,51 @@
+{
+  "name": "tabzero",
+  "type": "module",
+  "version": "0.1.0",
+  "description": "TabZero is a privacy-first browser toolkit spanning dev0, web0, data0, privacy0, ui0, media0, and ai0.",
+  "license": "MIT",
+  "repository": "https://github.com/shubhu121/zero",
+  "funding": "https://github.com/sponsors/shubhu121",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/sitemap": "^3.7.3",
+    "@astrojs/tailwind": "^5.1.5",
+    "@duckdb/duckdb-wasm": "^1.29.0",
+    "@ffmpeg/ffmpeg": "^0.12.10",
+    "@ffmpeg/util": "^0.12.2",
+    "@fontsource/jetbrains-mono": "^5.2.8",
+    "@huggingface/transformers": "^3.5.0",
+    "@mlc-ai/web-llm": "^0.2.79",
+    "pdfjs-dist": "^4.8.0",
+    "@peculiar/x509": "^2.0.0",
+    "@vercel/analytics": "^2.0.1",
+    "apache-arrow": "^17.0.0",
+    "astro": "^5.1.5",
+    "croner": "^10.0.1",
+    "dagre": "^0.8.5",
+    "exifr": "^7.1.3",
+    "jq-web": "^0.6.2",
+    "js-yaml": "^5.0.0",
+    "pdf-lib": "^1.17.1",
+    "qrcode-generator": "^2.0.4",
+    "quicktype-core": "^23.2.6",
+    "reflect-metadata": "^0.2.2",
+    "sql-formatter": "^15.8.2",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.3",
+    "uuid": "^14.0.0"
+  },
+  "devDependencies": {
+    "@types/dagre": "^0.7.54",
+    "@types/js-yaml": "^4.0.9",
+    "vitest": "^4.1.8"
+  }
+}
