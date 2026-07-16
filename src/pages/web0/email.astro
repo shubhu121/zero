@@ -1,0 +1,52 @@
+﻿---
+import Base from '../../hubs/web0/layouts/Base.astro';
+import ToolLayout from '../../hubs/web0/components/ToolLayout.astro';
+---
+<Base
+  title="Email Header Analyzer - SPF/DKIM/DMARC verdicts, 100% local | web0.dev"
+  description="Paste raw email headers to see SPF, DKIM and DMARC results and the full Received hop path. Runs entirely in your browser. Your email headers are never uploaded.">
+  <ToolLayout name="Email Header Analyzer">
+    <div class="space-y-4">
+      <div class="border border-rule rounded overflow-hidden">
+        <div class="flex items-center justify-between px-3 py-2 border-b border-rule">
+          <span class="label">raw email headers</span>
+          <button id="email-load-sample" class="label text-accent hover:underline">load sample</button>
+        </div>
+        <textarea id="email-input" rows="10" spellcheck="false"
+          placeholder="Paste raw headers from your email client's 'Show original' / 'View source'…"
+          class="w-full bg-raised px-3 py-3 font-mono text-xs text-ink resize-y focus:outline-none"></textarea>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div id="email-spf" class="border border-rule rounded overflow-hidden">
+          <div class="label px-3 py-2 border-b border-rule">SPF</div>
+          <div class="p-3 text-sm text-muted">—</div>
+        </div>
+        <div id="email-dkim" class="border border-rule rounded overflow-hidden">
+          <div class="label px-3 py-2 border-b border-rule">DKIM</div>
+          <div class="p-3 text-sm text-muted">—</div>
+        </div>
+        <div id="email-dmarc" class="border border-rule rounded overflow-hidden">
+          <div class="label px-3 py-2 border-b border-rule">DMARC</div>
+          <div class="p-3 text-sm text-muted">—</div>
+        </div>
+      </div>
+      <div class="border border-rule rounded overflow-hidden">
+        <div class="label px-3 py-2 border-b border-rule">Received path (oldest → newest)</div>
+        <ol id="email-hops" class="divide-y divide-rule text-xs font-mono"></ol>
+      </div>
+    </div>
+    <div slot="explainer">
+      <p>Paste the raw headers from an email (Gmail: "Show original"; Outlook: "View source") to
+      see how it authenticated. <strong>SPF</strong> checks the sending IP is allowed for the
+      envelope domain, <strong>DKIM</strong> verifies a cryptographic signature, and
+      <strong>DMARC</strong> ties them to the visible <code>From:</code> domain and says what to do
+      on failure.</p>
+      <p class="mt-3">Everything is parsed locally in your browser. The headers you paste are never
+      uploaded. The Received path is reversed so the originating server is at the top.</p>
+    </div>
+  </ToolLayout>
+</Base>
+<script>
+  import { emailSection } from '../../hubs/web0/scripts/tools/email';
+  emailSection();
+</script>

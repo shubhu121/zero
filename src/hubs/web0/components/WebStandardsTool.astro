@@ -1,0 +1,99 @@
+---
+import type { WebStandardsTool } from '../lib/webStandards';
+
+interface Props { kind: WebStandardsTool; }
+const { kind } = Astro.props;
+const inputClass = 'w-full bg-raised border border-rule rounded px-3 py-2 font-mono text-sm text-ink focus:outline-none focus:border-accent';
+const labelClass = 'label block mb-1';
+---
+
+<div class="max-w-2xl space-y-5" data-web-standard-kind={kind}>
+  {kind === 'csp' && <label class={labelClass}>one directive per line
+    <textarea id="csp-directives" rows="7" spellcheck="false" class={inputClass}>{`default-src 'self'\nscript-src 'self'\nstyle-src 'self'\nimg-src 'self' data:\nobject-src 'none'\nbase-uri 'self'`}</textarea>
+  </label>}
+
+  {kind === 'cors' && <div class="grid sm:grid-cols-2 gap-4">
+    <label class={labelClass}>allowed origin<input id="cors-origin" value="https://app.example.com" class={inputClass} /></label>
+    <label class={labelClass}>methods<input id="cors-methods" value="GET, POST, OPTIONS" class={inputClass} /></label>
+    <label class={labelClass}>allowed headers<input id="cors-headers" value="Content-Type, Authorization" class={inputClass} /></label>
+    <label class={labelClass}>preflight cache (seconds)<input id="cors-max-age" type="number" min="0" value="86400" class={inputClass} /></label>
+    <label class="label flex items-center gap-2 sm:col-span-2"><input id="cors-credentials" type="checkbox" class="accent-accent" /> allow credentials (requires a specific origin)</label>
+  </div>}
+
+  {kind === 'cache-control' && <div class="grid sm:grid-cols-2 gap-4">
+    <label class={labelClass}>visibility<select id="cache-visibility" class={inputClass}><option value="public">public</option><option value="private">private</option></select></label>
+    <label class={labelClass}>max age (seconds)<input id="cache-max-age" type="number" min="0" value="3600" class={inputClass} /></label>
+    <label class="label flex items-center gap-2"><input id="cache-immutable" type="checkbox" class="accent-accent" /> immutable asset</label>
+    <label class="label flex items-center gap-2"><input id="cache-no-cache" type="checkbox" class="accent-accent" /> revalidate before reuse</label>
+  </div>}
+
+  {kind === 'cookies' && <label class={labelClass}>Set-Cookie header(s), one per line
+    <textarea id="cookies-raw" rows="5" spellcheck="false" class={inputClass}>{'session=abc123; Path=/; Secure; HttpOnly; SameSite=Lax'}</textarea>
+  </label>}
+
+  {kind === 'robots' && <div class="grid sm:grid-cols-2 gap-4">
+    <label class={labelClass}>user agent<input id="robots-agent" value="*" class={inputClass} /></label>
+    <label class={labelClass}>sitemap URL<input id="robots-sitemap" value="https://example.com/sitemap.xml" class={inputClass} /></label>
+    <label class={labelClass}>allow paths, one per line<textarea id="robots-allow" rows="4" class={inputClass}>{'/'}</textarea></label>
+    <label class={labelClass}>disallow paths, one per line<textarea id="robots-disallow" rows="4" class={inputClass}>{'/admin/\n/drafts/'}</textarea></label>
+  </div>}
+
+  {kind === 'sitemap' && <div class="space-y-4">
+    <label class={labelClass}>site URL<input id="sitemap-base" value="https://example.com" class={inputClass} /></label>
+    <label class={labelClass}>paths or full URLs, one per line<textarea id="sitemap-paths" rows="5" class={inputClass}>{'/\n/about/\n/docs/'}</textarea></label>
+  </div>}
+
+  {kind === 'security-txt' && <div class="grid sm:grid-cols-2 gap-4">
+    <label class={labelClass}>contact URL or email<textarea id="security-contact" rows="3" class={inputClass}>{'mailto:security@example.com'}</textarea></label>
+    <label class={labelClass}>expires (ISO 8601)<input id="security-expires" value="2027-01-01T00:00:00.000Z" class={inputClass} /></label>
+    <label class={labelClass}>encryption key URL<input id="security-encryption" value="https://example.com/.well-known/pgp-key.txt" class={inputClass} /></label>
+    <label class={labelClass}>policy URL<input id="security-policy" value="https://example.com/security" class={inputClass} /></label>
+  </div>}
+
+  {kind === 'redirects' && <label class={labelClass}>one rule per line: <code>/old /new [301|302]</code>
+    <textarea id="redirects-raw" rows="6" spellcheck="false" class={inputClass}>{'/old-page  /new-page  301\n/docs/*  /guides/:splat  301'}</textarea>
+  </label>}
+
+  {kind === 'referrer-policy' && <label class={labelClass}>policy<select id="referrer-policy-value" class={inputClass}>
+    <option value="strict-origin-when-cross-origin">strict-origin-when-cross-origin</option>
+    <option value="strict-origin">strict-origin</option><option value="no-referrer">no-referrer</option>
+    <option value="same-origin">same-origin</option><option value="origin-when-cross-origin">origin-when-cross-origin</option>
+  </select></label>}
+
+  {kind === 'permissions-policy' && <label class={labelClass}>one feature policy per line
+    <textarea id="permissions-raw" rows="6" spellcheck="false" class={inputClass}>{'camera=()\nmicrophone=()\ngeolocation=()\npayment=()'}</textarea>
+  </label>}
+
+  {kind === 'hsts' && <div class="grid sm:grid-cols-2 gap-4">
+    <label class={labelClass}>max age (seconds)<input id="hsts-max-age" type="number" min="0" value="63072000" class={inputClass} /></label>
+    <div class="space-y-3 pt-6"><label class="label flex items-center gap-2"><input id="hsts-subdomains" type="checkbox" checked class="accent-accent" /> include subdomains</label><label class="label flex items-center gap-2"><input id="hsts-preload" type="checkbox" checked class="accent-accent" /> preload (only after review)</label></div>
+  </div>}
+
+  {kind === 'canonical' && <label class={labelClass}>canonical URL<input id="canonical-url" value="https://example.com/page" class={inputClass} /></label>}
+
+  {kind === 'hreflang' && <label class={labelClass}>language and URL, one per line
+    <textarea id="hreflang-raw" rows="5" spellcheck="false" class={inputClass}>{'en https://example.com/en/\nfr https://example.com/fr/\nx-default https://example.com/'}</textarea>
+  </label>}
+
+  {kind === 'manifest' && <div class="grid sm:grid-cols-2 gap-4">
+    <label class={labelClass}>app name<input id="manifest-name" value="Example App" class={inputClass} /></label>
+    <label class={labelClass}>short name<input id="manifest-short-name" value="Example" class={inputClass} /></label>
+    <label class={labelClass}>start URL<input id="manifest-start-url" value="/" class={inputClass} /></label>
+    <label class={labelClass}>display<select id="manifest-display" class={inputClass}><option value="standalone">standalone</option><option value="minimal-ui">minimal-ui</option><option value="fullscreen">fullscreen</option><option value="browser">browser</option></select></label>
+    <label class={labelClass}>theme color<input id="manifest-theme-color" type="color" value="#0d9488" class="block h-10 w-full bg-raised border border-rule rounded px-1 py-1" /></label>
+    <label class={labelClass}>background color<input id="manifest-background-color" type="color" value="#ffffff" class="block h-10 w-full bg-raised border border-rule rounded px-1 py-1" /></label>
+  </div>}
+
+  {kind === 'link-header' && <div class="grid sm:grid-cols-2 gap-4">
+    <label class={labelClass}>resource URL<input id="link-header-url" value="/assets/app.css" class={inputClass} /></label>
+    <label class={labelClass}>relationship<select id="link-header-relation" class={inputClass}><option value="preload">preload</option><option value="preconnect">preconnect</option><option value="modulepreload">modulepreload</option><option value="stylesheet">stylesheet</option></select></label>
+    <label class={labelClass}>resource type<select id="link-header-as" class={inputClass}><option value="style">style</option><option value="script">script</option><option value="font">font</option><option value="image">image</option><option value="">not applicable</option></select></label>
+    <label class="label flex items-center gap-2 pt-6"><input id="link-header-crossorigin" type="checkbox" class="accent-accent" /> crossorigin</label>
+  </div>}
+
+  <div class="border border-rule rounded overflow-hidden">
+    <div class="flex items-center justify-between gap-3 px-3 py-2 border-b border-rule bg-raised"><span class="label">generated locally</span><button id="standard-copy" class="label text-muted hover:text-accent">copy</button></div>
+    <pre id="standard-output" class="p-3 overflow-x-auto text-sm font-mono text-ink whitespace-pre-wrap break-words"></pre>
+  </div>
+  <p id="standard-note" class="text-xs text-muted min-h-[1.25rem]"></p>
+</div>

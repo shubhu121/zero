@@ -1,0 +1,41 @@
+﻿---
+const tools = [
+  { href: '/web0/dns', label: 'dns' }, { href: '/web0/email', label: 'email' },
+  { href: '/web0/headers', label: 'headers' }, { href: '/web0/ws', label: 'websocket' },
+  { href: '/web0/rdap', label: 'rdap' }, { href: '/web0/cidr', label: 'cidr' },
+  { href: '/web0/csp', label: 'csp' }, { href: '/web0/cors', label: 'cors' },
+  { href: '/web0/cache-control', label: 'cache' }, { href: '/web0/cookies', label: 'cookies' },
+  { href: '/web0/robots', label: 'robots' }, { href: '/web0/sitemap', label: 'sitemap' },
+  { href: '/web0/security-txt', label: 'security.txt' }, { href: '/web0/redirects', label: 'redirects' },
+  { href: '/web0/referrer-policy', label: 'referrer' }, { href: '/web0/permissions-policy', label: 'permissions' },
+  { href: '/web0/hsts', label: 'hsts' }, { href: '/web0/canonical', label: 'canonical' },
+  { href: '/web0/hreflang', label: 'hreflang' }, { href: '/web0/manifest', label: 'manifest' },
+  { href: '/web0/link-header', label: 'link header' },
+];
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+<header class="suite-header border-b border-rule">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-5 pb-3 flex items-baseline justify-between">
+    <a href="/web0" class="display text-2xl tracking-tight">web<span class="text-accent">0</span></a>
+    <div class="flex items-center gap-5">
+      <button id="theme-toggle" class="label hover:text-ink" aria-label="Toggle theme">◐ theme</button>
+      <a href="https://github.com/shubhu121/zero" class="label hover:text-ink" rel="noopener">github ↗</a>
+      <a href="https://github.com/sponsors/shubhu121" class="label hover:text-accent" rel="noopener">♡ sponsor</a>
+    </div>
+  </div>
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 pb-3 overflow-x-auto" aria-label="Tools">
+    <div class="flex gap-5 min-w-max">
+      {tools.map((t) => (
+        <a href={t.href}
+          aria-current={path === t.href ? 'page' : undefined}
+          class={`label hover:text-ink ${path === t.href ? 'text-accent underline underline-offset-4' : ''}`}>
+          {t.label}
+        </a>
+      ))}
+    </div>
+  </nav>
+</header>
+<script>
+  import { initThemeToggle } from '../scripts/theme';
+  initThemeToggle(document.getElementById('theme-toggle')!);
+</script>

@@ -1,0 +1,36 @@
+﻿---
+import Base from '../../hubs/web0/layouts/Base.astro';
+import ToolLayout from '../../hubs/web0/components/ToolLayout.astro';
+---
+<Base
+  title="DNS Lookup (DNS-over-HTTPS) - A/AAAA/MX/TXT/CAA | web0.dev"
+  description="Look up DNS records (A, AAAA, MX, TXT, NS, CNAME, CAA) via Cloudflare DNS-over-HTTPS, straight from your browser. No backend, no logging by us.">
+  <ToolLayout name="DNS Lookup" trust="queries Cloudflare DNS-over-HTTPS (1.1.1.1) directly from your browser. Nothing else is contacted.">
+    <div class="max-w-2xl space-y-4">
+      <div class="flex flex-wrap gap-2 items-center">
+        <input id="dns-domain" type="text" placeholder="example.com" spellcheck="false"
+          class="flex-1 min-w-[12rem] bg-raised border border-rule rounded px-3 py-2 font-mono text-sm text-ink focus:outline-none focus:border-accent" />
+        <select id="dns-type" class="bg-raised border border-rule rounded px-2 py-2 text-sm text-ink focus:outline-none focus:border-accent">
+          <option>A</option><option>AAAA</option><option>MX</option><option>TXT</option><option>NS</option><option>CNAME</option><option>CAA</option>
+        </select>
+        <button id="dns-lookup-btn" class="font-mono text-xs uppercase tracking-wider font-medium bg-accent text-accent-ink px-4 py-2 rounded">Lookup</button>
+      </div>
+      <p id="dns-status" class="label hidden min-h-[1.2em]"></p>
+      <ul id="dns-records" class="border border-rule rounded divide-y divide-rule">
+        <li class="p-4 text-muted text-sm">Enter a domain and click Lookup. Uses Cloudflare DNS-over-HTTPS (1.1.1.1).</li>
+      </ul>
+    </div>
+    <div slot="explainer">
+      <p>This resolves DNS records using <strong>Cloudflare DNS-over-HTTPS</strong> (the JSON API at
+      1.1.1.1). The query goes from your browser straight to Cloudflare over HTTPS, so there's no web0
+      backend in the path and we log nothing.</p>
+      <p class="mt-3">Record types: <code>A</code>/<code>AAAA</code> (IPv4/IPv6 addresses),
+      <code>MX</code> (mail servers), <code>TXT</code> (SPF, verification), <code>NS</code> (nameservers),
+      <code>CNAME</code> (aliases), <code>CAA</code> (which CAs may issue certs).</p>
+    </div>
+  </ToolLayout>
+</Base>
+<script>
+  import { dnsSection } from '../../hubs/web0/scripts/tools/dns';
+  dnsSection();
+</script>

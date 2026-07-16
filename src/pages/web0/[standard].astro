@@ -1,0 +1,44 @@
+---
+import Base from '../../hubs/web0/layouts/Base.astro';
+import ToolLayout from '../../hubs/web0/components/ToolLayout.astro';
+import WebStandardsTool from '../../hubs/web0/components/WebStandardsTool.astro';
+import { WEB_STANDARD_TOOL_SLUGS, type WebStandardsTool } from '../../hubs/web0/lib/webStandards';
+
+interface Standard { slug: WebStandardsTool; name: string; title: string; description: string; explainer: string; }
+const standards: Standard[] = [
+  { slug: 'csp', name: 'Content Security Policy Builder', title: 'CSP Builder - Content-Security-Policy header generator', description: 'Build a Content-Security-Policy response header locally in your browser. No pasted policy is uploaded.', explainer: 'A Content Security Policy tells browsers which origins may supply scripts, styles, images and other resources. Start strict, then explicitly add only the sources your page needs.' },
+  { slug: 'cors', name: 'CORS Header Builder', title: 'CORS Header Builder - Access-Control-Allow generator', description: 'Generate CORS response headers locally. Nothing is sent to a server.', explainer: 'CORS is enforced by browsers, not by a client-side fetch option. Configure these response headers on the server that owns the resource, and avoid wildcard origins when credentials are enabled.' },
+  { slug: 'cache-control', name: 'Cache-Control Builder', title: 'Cache-Control Builder - HTTP cache header generator', description: 'Generate Cache-Control response headers locally in your browser.', explainer: 'Cache-Control tells browser and intermediary caches whether a response can be stored and for how long. Fingerprinted static assets can often be cached for a long time; HTML usually needs a shorter lifetime.' },
+  { slug: 'cookies', name: 'Cookie Header Inspector', title: 'Cookie Header Inspector - parse Set-Cookie safely', description: 'Inspect Set-Cookie header attributes entirely in the current browser tab.', explainer: 'Paste Set-Cookie values to view each cookie name, value, and attribute. This parser only reads the text you enter; it does not set, send, or persist cookies.' },
+  { slug: 'robots', name: 'robots.txt Generator', title: 'robots.txt Generator - local crawler rules builder', description: 'Create robots.txt crawler rules locally, with no account or network request.', explainer: 'robots.txt communicates crawler preferences at your domain root. It is advisory: use authentication or server-side controls for content that must actually be private.' },
+  { slug: 'sitemap', name: 'Sitemap XML Generator', title: 'Sitemap XML Generator - create sitemap.xml locally', description: 'Generate sitemap.xml from paths or URLs locally in your browser.', explainer: 'A sitemap gives search engines a list of canonical, crawlable URLs. Include stable pages you want indexed and publish the output at /sitemap.xml.' },
+  { slug: 'security-txt', name: 'security.txt Generator', title: 'security.txt Generator - RFC 9116 contact file', description: 'Build a security.txt disclosure file entirely in your browser.', explainer: 'security.txt (RFC 9116) gives security researchers a clear reporting route. Publish it at /.well-known/security.txt and keep its expiry current.' },
+  { slug: 'redirects', name: 'Redirect Rules Generator', title: 'Redirect Rules Generator - Netlify-style redirects', description: 'Format redirect rules locally for a Netlify-style _redirects file.', explainer: 'Redirects preserve links when URLs move. This generator emits the simple source, destination, status format used by Netlify _redirects files; check your host documentation before deployment.' },
+  { slug: 'referrer-policy', name: 'Referrer Policy Explorer', title: 'Referrer-Policy Explorer - header and meta tag', description: 'Explore Referrer-Policy values and generate the header locally.', explainer: 'Referrer Policy controls how much of the current URL accompanies outbound requests. The common strict-origin-when-cross-origin setting keeps detailed same-site analytics while reducing cross-site leakage.' },
+  { slug: 'permissions-policy', name: 'Permissions Policy Builder', title: 'Permissions-Policy Builder - browser feature restrictions', description: 'Generate Permissions-Policy response headers locally, without uploading a configuration.', explainer: 'Permissions Policy limits powerful browser features such as camera, microphone, geolocation, and payment. Disable features your page does not need, then allow only the required origins.' },
+  { slug: 'hsts', name: 'HSTS Header Builder', title: 'HSTS Header Builder - Strict-Transport-Security', description: 'Generate Strict-Transport-Security headers locally in your browser.', explainer: 'HSTS makes a browser use HTTPS for future visits. Enable it only after every subdomain you include is ready for HTTPS, since browsers remember the policy for its full max-age.' },
+  { slug: 'canonical', name: 'Canonical Tag Generator', title: 'Canonical Tag Generator - local rel=canonical builder', description: 'Generate a canonical link element locally, without sending the URL anywhere.', explainer: 'A canonical link identifies the preferred URL when equivalent content is reachable through multiple paths, query strings, or pagination variants.' },
+  { slug: 'hreflang', name: 'hreflang Tag Generator', title: 'hreflang Tag Generator - alternate language links', description: 'Generate hreflang alternate-language link tags locally in the browser.', explainer: 'hreflang links help search engines match a page to a reader’s language or region. Use absolute, reciprocal URLs, and add x-default where there is a default version.' },
+  { slug: 'manifest', name: 'Web App Manifest Builder', title: 'Web App Manifest Builder - manifest.webmanifest JSON', description: 'Create a web app manifest locally in your browser, with no account or upload.', explainer: 'A web app manifest provides install metadata for a site or PWA. Save this JSON as manifest.webmanifest, link it from your page, then add the icon entries your app needs.' },
+  { slug: 'link-header', name: 'Link Header Builder', title: 'Link Header Builder - preload and preconnect response header', description: 'Generate an HTTP Link response header locally for resource hints.', explainer: 'Link headers can preload a critical resource or preconnect to an origin before the HTML parser discovers it. Use sparingly: preloading the wrong file can compete with more important requests.' },
+];
+
+export function getStaticPaths() {
+  return WEB_STANDARD_TOOL_SLUGS.map((standard) => ({ params: { standard } }));
+}
+
+const tool = standards.find((item) => item.slug === Astro.params.standard)!;
+---
+
+<Base title={`${tool.title} | web0.dev`} description={tool.description}>
+  <ToolLayout name={tool.name}>
+    <WebStandardsTool kind={tool.slug} />
+    <div slot="explainer"><p>{tool.explainer}</p><p class="mt-3">Everything above runs locally in this tab. Open DevTools → Network to verify that this tool makes no request.</p></div>
+  </ToolLayout>
+</Base>
+
+<script>
+  import { initWebStandardsTool } from '../../hubs/web0/scripts/tools/webStandards';
+  const kind = document.querySelector<HTMLElement>('[data-web-standard-kind]')?.dataset.webStandardKind;
+  if (kind) initWebStandardsTool(kind as Parameters<typeof initWebStandardsTool>[0]);
+</script>

@@ -1,0 +1,42 @@
+﻿---
+import Base from '../../hubs/web0/layouts/Base.astro';
+import ToolLayout from '../../hubs/web0/components/ToolLayout.astro';
+---
+<Base
+  title="WebSocket Tester - connect, send, inspect frames. No account | web0.dev"
+  description="Open a WebSocket connection, send messages and watch frames in real time. No sign-up, no backend. Connects straight from your browser to the endpoint you choose.">
+  <ToolLayout name="WebSocket Tester" trust="connects only to the WebSocket endpoint you enter. Nothing else is contacted.">
+    <div class="max-w-2xl space-y-4">
+      <div class="flex gap-2">
+        <input id="ws-url" type="text" placeholder="wss://echo.websocket.events" spellcheck="false"
+          class="flex-1 bg-raised border border-rule rounded px-3 py-2 font-mono text-sm text-ink focus:outline-none focus:border-accent" />
+        <button id="ws-connect" class="font-mono text-xs uppercase tracking-wider font-medium bg-accent text-accent-ink px-4 py-2 rounded">Connect</button>
+        <span id="ws-status" class="label self-center w-20">idle</span>
+      </div>
+      <div id="ws-presets" class="flex flex-wrap gap-2"></div>
+
+      <div class="border border-rule rounded">
+        <div class="label px-3 py-2 border-b border-rule">frames</div>
+        <div id="ws-log" class="p-3 max-h-80 overflow-auto min-h-[6rem]"></div>
+      </div>
+
+      <div class="flex gap-2">
+        <textarea id="ws-send" rows="2" placeholder="message to send (Ctrl+Enter)" spellcheck="false"
+          class="flex-1 bg-raised border border-rule rounded px-3 py-2 font-mono text-sm text-ink resize-y focus:outline-none focus:border-accent"></textarea>
+        <button id="ws-send-btn" class="font-mono text-xs uppercase tracking-wider font-medium border border-rule-strong text-ink px-4 py-2 rounded self-start disabled:opacity-45 disabled:cursor-not-allowed" disabled>Send</button>
+      </div>
+    </div>
+    <div slot="explainer">
+      <p>WebSocket connections aren't subject to the same-origin / CORS restrictions that block
+      arbitrary cross-origin <code>fetch</code> reads, so this tester works fully in the browser:
+      it connects directly to whatever <code>ws://</code> or <code>wss://</code> endpoint you give it.</p>
+      <p class="mt-3">Close codes worth knowing: <code>1000</code> normal, <code>1006</code> abnormal
+      (no close frame, often a network drop or TLS/handshake failure), <code>1011</code> server error.
+      Try <code>wss://echo.websocket.events</code> to see your messages echoed back.</p>
+    </div>
+  </ToolLayout>
+</Base>
+<script>
+  import { wsSection } from '../../hubs/web0/scripts/tools/ws';
+  wsSection();
+</script>

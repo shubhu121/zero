@@ -1,0 +1,35 @@
+﻿---
+import Base from '../../hubs/web0/layouts/Base.astro';
+import ToolLayout from '../../hubs/web0/components/ToolLayout.astro';
+---
+<Base
+  title="RDAP Lookup - domain & IP registration data (WHOIS successor) | web0.dev"
+  description="Look up domain and IP registration data via RDAP, the structured JSON successor to WHOIS. Runs in your browser against the official registries through the rdap.org bootstrap.">
+  <ToolLayout name="RDAP Lookup" trust="queries the official RDAP registry for your input via the rdap.org bootstrap, directly from your browser.">
+    <div class="max-w-2xl space-y-4">
+      <div class="flex gap-2">
+        <input id="rdap-input" type="text" placeholder="google.com   ·   8.8.8.8" spellcheck="false"
+          class="flex-1 bg-raised border border-rule rounded px-3 py-2 font-mono text-sm text-ink focus:outline-none focus:border-accent" />
+        <button id="rdap-btn" class="font-mono text-xs uppercase tracking-wider font-medium bg-accent text-accent-ink px-4 py-2 rounded">Lookup</button>
+      </div>
+      <p id="rdap-status" class="label min-h-[1.2em]"></p>
+      <div id="rdap-out"></div>
+      <details id="rdap-raw-wrap" class="hidden border border-rule rounded">
+        <summary class="label px-3 py-2 cursor-pointer">raw RDAP JSON</summary>
+        <pre id="rdap-raw" class="p-3 text-xs font-mono text-ink overflow-auto max-h-96 whitespace-pre-wrap break-all"></pre>
+      </details>
+    </div>
+    <div slot="explainer">
+      <p>RDAP (Registration Data Access Protocol) is the structured, JSON-over-HTTPS successor to
+      WHOIS. Classic WHOIS runs on TCP port 43, which a browser can't open. RDAP is plain HTTPS and
+      ICANN's gTLD profile mandates <code>Access-Control-Allow-Origin: *</code>, so this works fully
+      client-side.</p>
+      <p class="mt-3">Works best for gTLDs (.com, .org, .dev, .io …) and IP allocations (ARIN/RIPE/APNIC).
+      Some ccTLD registries don't expose CORS-enabled RDAP. Those fail honestly rather than guess.</p>
+    </div>
+  </ToolLayout>
+</Base>
+<script>
+  import { rdapSection } from '../../hubs/web0/scripts/tools/rdap';
+  rdapSection();
+</script>

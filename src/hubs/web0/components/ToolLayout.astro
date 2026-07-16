@@ -1,0 +1,12 @@
+---
+interface Props { name: string; trust?: string; }
+const { name, trust = '100% client-side. Your data never leaves this page. Verify: DevTools → Network.' } = Astro.props;
+---
+<div class="tool-layout fade-in">
+  <h1 class="text-3xl sm:text-4xl tracking-tight">{name}</h1>
+  <p class="tool-trust label mt-2 mb-8">{trust}</p>
+  <slot />
+  <div class="tool-explainer mt-12 border-t border-rule pt-6 max-w-2xl text-sm text-muted leading-relaxed">
+    <slot name="explainer" />
+  </div>
+</div>

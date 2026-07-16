@@ -1,0 +1,61 @@
+﻿---
+import Base from '../../hubs/web0/layouts/Base.astro';
+
+const tools = [
+  { href: '/web0/dns', name: 'DNS Lookup', desc: 'A/AAAA/MX/TXT/NS/CNAME/CAA over Cloudflare DNS-over-HTTPS.' },
+  { href: '/web0/email', name: 'Email Header Analyzer', desc: 'SPF, DKIM, DMARC verdicts + the full Received hop path.' },
+  { href: '/web0/headers', name: 'HTTP Security Headers', desc: 'Grade CSP, HSTS, X-Frame-Options & more. Paste or fetch.' },
+  { href: '/web0/ws', name: 'WebSocket Tester', desc: 'Connect, send, and inspect frames live. No account.' },
+  { href: '/web0/rdap', name: 'RDAP Lookup', desc: 'Domain & IP registration data: the JSON successor to WHOIS.' },
+  { href: '/web0/cidr', name: 'CIDR / Subnet Calculator', desc: 'Network, broadcast, host range & masks. Pure local math.' },
+  { href: '/web0/csp', name: 'Content Security Policy Builder', desc: 'Build a practical Content-Security-Policy header locally.' },
+  { href: '/web0/cors', name: 'CORS Header Builder', desc: 'Generate safe Access-Control-Allow response headers.' },
+  { href: '/web0/cache-control', name: 'Cache-Control Builder', desc: 'Choose caching directives for pages and assets.' },
+  { href: '/web0/cookies', name: 'Cookie Header Inspector', desc: 'Read Set-Cookie attributes without setting or sending cookies.' },
+  { href: '/web0/robots', name: 'robots.txt Generator', desc: 'Create crawler directives and a sitemap declaration.' },
+  { href: '/web0/sitemap', name: 'Sitemap XML Generator', desc: 'Turn site paths into a clean sitemap.xml document.' },
+  { href: '/web0/security-txt', name: 'security.txt Generator', desc: 'Make an RFC 9116 security contact file.' },
+  { href: '/web0/redirects', name: 'Redirect Rules Generator', desc: 'Write Netlify-style redirect rules for moved URLs.' },
+  { href: '/web0/referrer-policy', name: 'Referrer Policy Explorer', desc: 'Compare referrer privacy policies and their headers.' },
+  { href: '/web0/permissions-policy', name: 'Permissions Policy Builder', desc: 'Restrict powerful browser features per page.' },
+  { href: '/web0/hsts', name: 'HSTS Header Builder', desc: 'Create a Strict-Transport-Security response header.' },
+  { href: '/web0/canonical', name: 'Canonical Tag Generator', desc: 'Make a rel=canonical tag for a preferred URL.' },
+  { href: '/web0/hreflang', name: 'hreflang Tag Generator', desc: 'Generate alternate-language links for international pages.' },
+  { href: '/web0/manifest', name: 'Web App Manifest Builder', desc: 'Create a manifest.webmanifest for installable sites.' },
+  { href: '/web0/link-header', name: 'Link Header Builder', desc: 'Build preload and preconnect resource-hint headers.' },
+];
+---
+<Base
+  title="web0 - browser-native network and web-standard tools"
+  description="Twenty-one browser-native network and web-standard tools: DNS, RDAP, headers, WebSocket, HTTP policy builders, crawler metadata, and more. No accounts, no backend, no logging.">
+  <section class="fade-in">
+    <h1 class="text-4xl sm:text-5xl tracking-tight">Network tools that respect the network. <span class="text-accent">And you.</span></h1>
+    <p class="mt-4 max-w-2xl text-muted leading-relaxed">Twenty-one focused network and web-standard utilities that run in your browser. The ones that touch the network say exactly what they call (and nothing else); the rest never leave the tab. No sign-ups, no API keys, no logging by us.</p>
+
+    <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-px bg-rule border border-rule rounded overflow-hidden">
+      {tools.map((t) => (
+        <a href={t.href} class="group bg-bg p-5 hover:bg-raised transition-colors">
+          <div class="flex items-baseline justify-between gap-2">
+            <span class="font-semibold text-ink group-hover:text-accent transition-colors">{t.name}</span>
+            <span class="label text-muted group-hover:text-accent transition-colors">→</span>
+          </div>
+          <p class="mt-1 text-sm text-muted leading-relaxed">{t.desc}</p>
+        </a>
+      ))}
+    </div>
+
+    <div class="mt-12 border-t border-rule pt-6 max-w-2xl text-sm text-muted leading-relaxed">
+      <h2 class="label text-ink">Why browser-native?</h2>
+      <p class="mt-2">Most "network tool" sites proxy your queries through their own servers, which
+      means your lookups, headers and targets pass through (and can be logged by) a third party. web0
+      runs the work in your own browser instead. DNS goes to Cloudflare DoH, RDAP to the official
+      registries, WebSocket straight to your endpoint, and each tool's trust line names exactly what it
+      contacts. Open DevTools → Network and verify it yourself.</p>
+    </div>
+  </section>
+</Base>
+
+<script is:inline>
+  const m = location.hash.match(/^#\/(dns|email|headers|unshorten)$/);
+  if (m) location.replace(m[1] === 'unshorten' ? '/web0' : '/web0/' + m[1]);
+</script>
