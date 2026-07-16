@@ -1,0 +1,24 @@
+/* data0 — minimal design tokens (suite match: dev0/web0/privacy0).
+   Violet accent = data0's identity. Semantic vars only; components never use raw hex. */
+:root, [data-theme="paper"] {
+  --bg: #ffffff; --bg-raised: #f6f6f7;
+  --ink: #18181b; --muted: #6b6b74;
+  --accent: #7c3aed; --accent-ink: #ffffff;
+  --rule: rgba(24, 24, 27, 0.12); --rule-strong: #18181b;
+  --ok: #16a34a; --warn: #b45309; --err: #dc2626;
+  /* JSON tree syntax colors — light */
+  --jv-key: #7c3aed; --jv-string: #15803d; --jv-number: #b45309;
+  --jv-boolean: #0e7490; --jv-null: #9ca3af; --jv-punct: #9ca3af;
+}
+[data-theme="nocturne"] {
+  --bg: #0a0a0b; --bg-raised: #161618;
+  --ink: #f4f4f5; --muted: #a1a1aa;
+  --accent: #a78bfa; --accent-ink: #0a0a0b;
+  --rule: rgba(244, 244, 245, 0.14); --rule-strong: #f4f4f5;
+  --ok: #4ade80; --warn: #fbbf24; --err: #f87171;
+  /* JSON tree syntax colors — dark */
+  --jv-key: #a78bfa; --jv-string: #c3e88d; --jv-number: #f78c6c;
+  --jv-boolean: #67e8f9; --jv-null: #6b7280; --jv-punct: #6b7280;
+}
+html { background: var(--bg); color: var(--ink); scrollbar-gutter: stable; }
+::selection { background: var(--accent); color: var(--accent-ink); }

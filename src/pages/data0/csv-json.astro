@@ -1,0 +1,58 @@
+---
+import Base from '../../hubs/data0/layouts/Base.astro';
+import Header from '../../hubs/data0/components/Header.astro';
+import Footer from '../../hubs/data0/components/Footer.astro';
+import ToolLayout from '../../hubs/data0/components/ToolLayout.astro';
+---
+<Base
+  title="CSV to JSON Converter (and back), 100% local | data0"
+  description="Convert CSV to JSON and JSON to CSV in your browser, with type inference and delimiter options. Nothing is uploaded."
+>
+  <Header />
+  <main class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8">
+    <ToolLayout name="CSV ⇄ JSON">
+      <div class="space-y-4">
+        <div class="flex items-center gap-3 flex-wrap">
+          <div class="inline-flex bg-raised border border-rule rounded-sm p-0.5">
+            <button data-cj-dir="csv2json" class="cj-dir-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors bg-bg text-accent">CSV → JSON</button>
+            <button data-cj-dir="json2csv" class="cj-dir-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors text-muted">JSON → CSV</button>
+          </div>
+          <label class="text-xs text-muted">Delimiter:
+            <select id="cj-delim" class="ml-1 bg-raised border border-rule rounded-sm px-2 py-1 text-xs font-mono text-ink focus:outline-none">
+              <option value="comma">Comma</option>
+              <option value="tab">Tab</option>
+              <option value="semicolon">Semicolon</option>
+            </select>
+          </label>
+          <label class="flex items-center gap-1.5 text-xs text-muted cursor-pointer"><input id="cj-header" type="checkbox" checked class="accent-accent" /> Header row</label>
+          <label id="cj-infer-wrap" class="flex items-center gap-1.5 text-xs text-muted cursor-pointer"><input id="cj-infer" type="checkbox" checked class="accent-accent" /> Infer types</label>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+            <div class="px-4 py-2.5 border-b border-rule"><span id="cj-in-label" class="label">CSV</span></div>
+            <textarea id="cj-input" class="w-full h-72 p-4 bg-transparent text-sm font-mono text-ink resize-none focus:outline-none" spellcheck="false"></textarea>
+          </div>
+          <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+            <div class="px-4 py-2.5 border-b border-rule flex items-center justify-between">
+              <span id="cj-out-label" class="label">JSON</span>
+              <button id="cj-copy" class="text-[10px] font-medium px-2 py-1 rounded-sm bg-bg border border-rule text-ink hover:bg-raised transition-colors">Copy</button>
+            </div>
+            <textarea id="cj-output" class="w-full h-72 p-4 bg-transparent text-sm font-mono text-ink resize-none focus:outline-none" readonly></textarea>
+          </div>
+        </div>
+        <div id="cj-error" class="hidden px-4 py-2 rounded-sm bg-raised border border-err text-xs text-err font-mono"></div>
+      </div>
+
+      <div slot="explainer">
+        <p class="mb-2">Convert spreadsheets to JSON and back without uploading anything. CSV → JSON uses the header row as object keys; with "infer types" on, numbers, booleans and nulls are parsed instead of left as strings. JSON → CSV flattens an array of objects, taking the union of all keys as columns.</p>
+        <p>The parser handles quoted fields, embedded commas and escaped quotes (RFC 4180). Switch direction to round-trip the result in one click. Everything runs locally in your browser.</p>
+      </div>
+    </ToolLayout>
+  </main>
+  <Footer />
+</Base>
+<script>
+  import { initCsvJson } from '../../hubs/data0/scripts/tools/csvjson';
+  initCsvJson();
+</script>

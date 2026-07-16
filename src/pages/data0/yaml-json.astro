@@ -1,0 +1,47 @@
+---
+import Base from '../../hubs/data0/layouts/Base.astro';
+import Header from '../../hubs/data0/components/Header.astro';
+import Footer from '../../hubs/data0/components/Footer.astro';
+import ToolLayout from '../../hubs/data0/components/ToolLayout.astro';
+---
+<Base
+  title="YAML to JSON Converter (and back), 100% local | data0"
+  description="Convert YAML to JSON and JSON to YAML in your browser. Validates as you type. Nothing is uploaded."
+>
+  <Header />
+  <main class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8">
+    <ToolLayout name="YAML ⇄ JSON">
+      <div class="space-y-4">
+        <div class="inline-flex bg-raised border border-rule rounded-sm p-0.5">
+          <button data-yj-dir="yaml2json" class="yj-dir-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors bg-bg text-accent">YAML → JSON</button>
+          <button data-yj-dir="json2yaml" class="yj-dir-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors text-muted">JSON → YAML</button>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+            <div class="px-4 py-2.5 border-b border-rule"><span id="yj-in-label" class="label">YAML</span></div>
+            <textarea id="yj-input" class="w-full h-72 p-4 bg-transparent text-sm font-mono text-ink resize-none focus:outline-none" spellcheck="false"></textarea>
+          </div>
+          <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+            <div class="px-4 py-2.5 border-b border-rule flex items-center justify-between">
+              <span id="yj-out-label" class="label">JSON</span>
+              <button id="yj-copy" class="text-[10px] font-medium px-2 py-1 rounded-sm bg-bg border border-rule text-ink hover:bg-raised transition-colors">Copy</button>
+            </div>
+            <textarea id="yj-output" class="w-full h-72 p-4 bg-transparent text-sm font-mono text-ink resize-none focus:outline-none" readonly></textarea>
+          </div>
+        </div>
+        <div id="yj-error" class="hidden px-4 py-2 rounded-sm bg-raised border border-err text-xs text-err font-mono"></div>
+      </div>
+
+      <div slot="explainer">
+        <p class="mb-2">Convert between YAML and JSON for config files, CI pipelines and Kubernetes manifests. Parsing uses the js-yaml library, so anchors, multi-line strings and nested structures are handled correctly, with parse errors shown inline.</p>
+        <p>Both directions run entirely in your browser — your configuration never touches a server, which matters when it contains hostnames, secrets references or internal details.</p>
+      </div>
+    </ToolLayout>
+  </main>
+  <Footer />
+</Base>
+<script>
+  import { initYamlJson } from '../../hubs/data0/scripts/tools/yamljson';
+  initYamlJson();
+</script>

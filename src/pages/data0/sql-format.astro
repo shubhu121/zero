@@ -1,0 +1,70 @@
+---
+import Base from '../../hubs/data0/layouts/Base.astro';
+import Header from '../../hubs/data0/components/Header.astro';
+import Footer from '../../hubs/data0/components/Footer.astro';
+import ToolLayout from '../../hubs/data0/components/ToolLayout.astro';
+---
+<Base
+  title="SQL Formatter & Beautifier (Postgres, MySQL, DuckDB…), 100% local | data0"
+  description="Format and beautify SQL for many dialects in your browser. Configure keyword case and indentation. Nothing is uploaded."
+>
+  <Header />
+  <main class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8">
+    <ToolLayout name="SQL Formatter">
+      <div class="space-y-4">
+        <div class="flex items-center gap-3 flex-wrap text-xs text-muted">
+          <label>Dialect:
+            <select id="sf-dialect" class="ml-1 bg-raised border border-rule rounded-sm px-2 py-1 font-mono text-ink focus:outline-none">
+              <option value="sql">Standard SQL</option>
+              <option value="postgresql">PostgreSQL</option>
+              <option value="mysql">MySQL</option>
+              <option value="duckdb">DuckDB</option>
+              <option value="sqlite">SQLite</option>
+              <option value="bigquery">BigQuery</option>
+              <option value="snowflake">Snowflake</option>
+              <option value="transactsql">T-SQL</option>
+            </select>
+          </label>
+          <label>Keywords:
+            <select id="sf-case" class="ml-1 bg-raised border border-rule rounded-sm px-2 py-1 font-mono text-ink focus:outline-none">
+              <option value="upper">UPPERCASE</option>
+              <option value="lower">lowercase</option>
+              <option value="preserve">Preserve</option>
+            </select>
+          </label>
+          <label>Indent:
+            <select id="sf-indent" class="ml-1 bg-raised border border-rule rounded-sm px-2 py-1 font-mono text-ink focus:outline-none">
+              <option value="2">2 spaces</option>
+              <option value="4">4 spaces</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+            <div class="px-4 py-2.5 border-b border-rule"><span class="label">SQL in</span></div>
+            <textarea id="sf-input" class="w-full h-80 p-4 bg-transparent text-sm font-mono text-ink resize-none focus:outline-none" spellcheck="false"></textarea>
+          </div>
+          <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+            <div class="px-4 py-2.5 border-b border-rule flex items-center justify-between">
+              <span class="label">Formatted</span>
+              <button id="sf-copy" class="text-[10px] font-medium px-2 py-1 rounded-sm bg-bg border border-rule text-ink hover:bg-raised transition-colors">Copy</button>
+            </div>
+            <textarea id="sf-output" class="w-full h-80 p-4 bg-transparent text-sm font-mono text-ink resize-none focus:outline-none" readonly></textarea>
+          </div>
+        </div>
+        <div id="sf-error" class="hidden px-4 py-2 rounded-sm bg-raised border border-err text-xs text-err font-mono"></div>
+      </div>
+
+      <div slot="explainer">
+        <p class="mb-2">Pretty-print messy SQL into a consistent, readable shape: clauses on their own lines, aligned lists, and your choice of keyword case and indent width. Pick the dialect (PostgreSQL, MySQL, DuckDB, BigQuery, Snowflake, T-SQL and more) so dialect-specific syntax is parsed correctly.</p>
+        <p>Formatting is powered by the sql-formatter library and runs entirely in your browser — your queries, table names and column names are never uploaded.</p>
+      </div>
+    </ToolLayout>
+  </main>
+  <Footer />
+</Base>
+<script>
+  import { initSqlFormat } from '../../hubs/data0/scripts/tools/sqlformat';
+  initSqlFormat();
+</script>

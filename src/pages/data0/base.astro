@@ -1,0 +1,64 @@
+---
+import Base from '../../hubs/data0/layouts/Base.astro';
+import Header from '../../hubs/data0/components/Header.astro';
+import Footer from '../../hubs/data0/components/Footer.astro';
+import ToolLayout from '../../hubs/data0/components/ToolLayout.astro';
+
+const outputs = [
+  { id: 'bc-bin', label: 'Binary (base 2)' },
+  { id: 'bc-oct', label: 'Octal (base 8)' },
+  { id: 'bc-dec', label: 'Decimal (base 10)' },
+  { id: 'bc-hex', label: 'Hex (base 16)' },
+];
+---
+<Base
+  title="Number Base Converter (binary, octal, decimal, hex), 100% local | data0"
+  description="Convert numbers between binary, octal, decimal, hexadecimal and any base from 2 to 36. Exact for very large integers. Nothing is uploaded."
+>
+  <Header />
+  <main class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8">
+    <ToolLayout name="Number Base Converter">
+      <div class="max-w-2xl space-y-5">
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="text-xs text-muted">Input base:</span>
+          <div class="inline-flex bg-raised border border-rule rounded-sm p-0.5">
+            <button data-bc-base="2" class="bc-base-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors text-muted">Bin</button>
+            <button data-bc-base="8" class="bc-base-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors text-muted">Oct</button>
+            <button data-bc-base="10" class="bc-base-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors bg-bg text-accent">Dec</button>
+            <button data-bc-base="16" class="bc-base-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors text-muted">Hex</button>
+          </div>
+        </div>
+
+        <input id="bc-input" type="text" class="w-full border border-rule rounded px-3 py-2.5 text-base font-mono bg-bg text-ink focus:outline-none focus:border-accent" placeholder="Number in base 10…" spellcheck="false" autocomplete="off" />
+        <div id="bc-error" class="hidden px-3 py-2 rounded-sm bg-raised border border-err text-xs text-err font-mono"></div>
+
+        <div class="rounded border border-rule overflow-hidden divide-y divide-rule">
+          {outputs.map((o) => (
+            <div class="flex items-center gap-3 px-4 py-2.5 bg-raised">
+              <span class="label w-40 shrink-0">{o.label}</span>
+              <code id={o.id} class="flex-1 text-sm font-mono text-accent break-all select-all"></code>
+              <button class="bc-copy text-[10px] text-muted hover:text-ink" data-bc-copy={o.id}>copy</button>
+            </div>
+          ))}
+          <div class="flex items-center gap-3 px-4 py-2.5 bg-raised">
+            <span class="label w-40 shrink-0 flex items-center gap-1">Base
+              <input id="bc-custom-base" type="number" min="2" max="36" value="36" class="w-14 border border-rule rounded px-1.5 py-0.5 text-xs font-mono bg-bg text-ink focus:outline-none focus:border-accent" />
+            </span>
+            <code id="bc-custom-out" class="flex-1 text-sm font-mono text-accent break-all select-all"></code>
+            <button class="bc-copy text-[10px] text-muted hover:text-ink" data-bc-copy="bc-custom-out">copy</button>
+          </div>
+        </div>
+      </div>
+
+      <div slot="explainer">
+        <p class="mb-2">Convert an integer between binary, octal, decimal and hexadecimal, plus any custom base from 2 to 36, all at once. Conversion uses JavaScript <code>BigInt</code>, so it stays exact even for numbers far beyond 64 bits — useful for hashes, bitmasks and large IDs.</p>
+        <p>You can paste values with <code>0x</code>, <code>0o</code> or <code>0b</code> prefixes (when they match the chosen base), and underscores or spaces as separators. Pure arithmetic, entirely in your browser.</p>
+      </div>
+    </ToolLayout>
+  </main>
+  <Footer />
+</Base>
+<script>
+  import { initBaseConv } from '../../hubs/data0/scripts/tools/baseconv';
+  initBaseConv();
+</script>

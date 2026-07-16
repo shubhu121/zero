@@ -1,0 +1,50 @@
+---
+import Base from '../../hubs/data0/layouts/Base.astro';
+import Header from '../../hubs/data0/components/Header.astro';
+import Footer from '../../hubs/data0/components/Footer.astro';
+import ToolLayout from '../../hubs/data0/components/ToolLayout.astro';
+---
+<Base
+  title="Chart Maker — CSV to bar, line & pie charts, 100% local | data0"
+  description="Paste CSV or TSV data and generate a bar, line or pie chart in your browser, exportable as SVG or PNG. Nothing is uploaded."
+>
+  <Header />
+  <main class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8">
+    <ToolLayout name="Chart Maker">
+      <div class="space-y-4">
+        <div class="flex items-center gap-3 flex-wrap">
+          <div class="inline-flex bg-raised border border-rule rounded-sm p-0.5">
+            <button data-ch-kind="bar" class="ch-kind-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors bg-bg text-accent">Bar</button>
+            <button data-ch-kind="line" class="ch-kind-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors text-muted">Line</button>
+            <button data-ch-kind="pie" class="ch-kind-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors text-muted">Pie</button>
+          </div>
+          <div class="ml-auto flex gap-2">
+            <button id="ch-dl-svg" class="btn">Download SVG</button>
+            <button id="ch-dl-png" class="btn btn-primary">Download PNG</button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-4">
+          <div class="lg:col-span-2 rounded-sm border border-rule bg-raised overflow-hidden">
+            <div class="px-4 py-2.5 border-b border-rule"><span class="label">Data (CSV / TSV)</span></div>
+            <textarea id="ch-input" class="w-full h-80 p-4 bg-transparent text-sm font-mono text-ink resize-none focus:outline-none" spellcheck="false" placeholder="label,series1,series2&#10;A,10,20"></textarea>
+          </div>
+          <div class="lg:col-span-3 rounded-sm border border-rule bg-bg overflow-hidden flex items-center justify-center p-4 min-h-[18rem]">
+            <div id="ch-svg" class="w-full"></div>
+          </div>
+        </div>
+        <div id="ch-error" class="hidden px-4 py-2 rounded-sm bg-raised border border-err text-xs text-err font-mono"></div>
+      </div>
+
+      <div slot="explainer">
+        <p class="mb-2">Paste a small table — the first column is the category labels, each remaining column is a numeric series — and get a bar, line or pie chart rendered as crisp SVG. Bar and line support multiple series; pie uses the first series. Export the result as a scalable SVG or a 2× PNG for slides and docs.</p>
+        <p>The chart is drawn with hand-written SVG (no charting library to load) and everything happens in your browser — your data is never uploaded.</p>
+      </div>
+    </ToolLayout>
+  </main>
+  <Footer />
+</Base>
+<script>
+  import { initChart } from '../../hubs/data0/scripts/tools/chartmaker';
+  initChart();
+</script>

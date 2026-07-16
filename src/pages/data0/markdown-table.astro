@@ -1,0 +1,53 @@
+---
+import Base from '../../hubs/data0/layouts/Base.astro';
+import Header from '../../hubs/data0/components/Header.astro';
+import Footer from '../../hubs/data0/components/Footer.astro';
+import ToolLayout from '../../hubs/data0/components/ToolLayout.astro';
+---
+<Base
+  title="CSV / TSV to Markdown Table Generator, 100% local | data0"
+  description="Turn CSV, TSV or a JSON array into a clean GitHub-flavoured Markdown table, with alignment and padding options. Nothing is uploaded."
+>
+  <Header />
+  <main class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8">
+    <ToolLayout name="Markdown Table Generator">
+      <div class="space-y-4">
+        <div class="flex items-center gap-3 flex-wrap text-xs text-muted">
+          <label>Align:
+            <select id="md-align" class="ml-1 bg-raised border border-rule rounded-sm px-2 py-1 font-mono text-ink focus:outline-none">
+              <option value="left">Left</option>
+              <option value="center">Center</option>
+              <option value="right">Right</option>
+            </select>
+          </label>
+          <label class="flex items-center gap-1.5 cursor-pointer"><input id="md-pad" type="checkbox" checked class="accent-accent" /> Pad columns (pretty source)</label>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+            <div class="px-4 py-2.5 border-b border-rule"><span class="label">CSV / TSV / JSON in</span></div>
+            <textarea id="md-input" class="w-full h-72 p-4 bg-transparent text-sm font-mono text-ink resize-none focus:outline-none" spellcheck="false"></textarea>
+          </div>
+          <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+            <div class="px-4 py-2.5 border-b border-rule flex items-center justify-between">
+              <span class="label">Markdown</span>
+              <button id="md-copy" class="text-[10px] font-medium px-2 py-1 rounded-sm bg-bg border border-rule text-ink hover:bg-raised transition-colors">Copy</button>
+            </div>
+            <textarea id="md-output" class="w-full h-72 p-4 bg-transparent text-sm font-mono text-ink resize-none focus:outline-none" readonly></textarea>
+          </div>
+        </div>
+        <div id="md-error" class="hidden px-4 py-2 rounded-sm bg-raised border border-err text-xs text-err font-mono"></div>
+      </div>
+
+      <div slot="explainer">
+        <p class="mb-2">Paste CSV, TSV or a JSON array of objects and get a GitHub-flavoured Markdown table for your README, issue or docs. The delimiter is auto-detected; the first row becomes the header. "Pad columns" aligns the raw Markdown so it stays readable in source, and the align option sets per-column text alignment.</p>
+        <p>Pipes inside cells are escaped automatically. Everything runs locally in your browser.</p>
+      </div>
+    </ToolLayout>
+  </main>
+  <Footer />
+</Base>
+<script>
+  import { initMdTable } from '../../hubs/data0/scripts/tools/mdtable';
+  initMdTable();
+</script>

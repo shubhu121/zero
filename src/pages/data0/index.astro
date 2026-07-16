@@ -1,0 +1,41 @@
+---
+import Base from '../../hubs/data0/layouts/Base.astro';
+import Header from '../../hubs/data0/components/Header.astro';
+import Footer from '../../hubs/data0/components/Footer.astro';
+const title = 'data0 - SQL on CSV, Parquet & JSON in your browser';
+const description =
+  'Drop a CSV, Parquet, or JSON file, write SQL, see results. Powered by DuckDB-WASM. 100% client-side, nothing is uploaded.';
+---
+<Base title={title} description={description}>
+  <Header />
+  <section class="max-w-6xl mx-auto w-full px-4 sm:px-6 pt-8 pb-1 fade-in">
+    <h1 class="display text-3xl sm:text-5xl tracking-tight leading-[1.05] max-w-2xl">
+      Query your data.<br />
+      <span class="text-accent">It never leaves your machine.</span>
+    </h1>
+    <p class="label mt-4">100% client-side · 0 trackers · 0 uploads · verify in DevTools → Network</p>
+  </section>
+  <!-- The interactive workbench mounts here via scripts/main.ts → ui.ts -->
+  <div id="app"></div>
+  <section class="seo max-w-6xl mx-auto w-full px-4 sm:px-6">
+    <h2>Why data0?</h2>
+    <p>
+      Uploading a spreadsheet just to run a query means handing a third party your raw data:
+      customer rows, financials, anything in the file. data0 skips the server entirely. DuckDB-WASM
+      loads once from a CDN, then every query runs locally over WebAssembly. Open the Network tab
+      and you will see zero outbound requests while you work.
+    </p>
+    <p>
+      Drop a <code>.csv</code>, <code>.tsv</code>, <code>.parquet</code>, <code>.json</code>, or
+      <code>.ndjson</code> file and query it with full DuckDB SQL: CTEs, joins, window functions,
+      and aggregations all work. Files become tables named <code>file1</code>, <code>file2</code>, …
+      so you can join several at once. No account, no upload, no server. Press
+      <code>Ctrl/⌘ + Enter</code> to run a query.
+    </p>
+  </section>
+  <Footer />
+</Base>
+<script>
+  import { boot } from '../../hubs/data0/scripts/main';
+  boot();
+</script>

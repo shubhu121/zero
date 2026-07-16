@@ -1,0 +1,17 @@
+---
+// The status line (#status) is updated imperatively by the tool: DuckDB readiness,
+// query timings, file-load messages. It lives in the footer so the tool layout in
+// #app stays purely about the workbench.
+---
+<footer class="suite-footer border-t border-rule mt-0">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row justify-between gap-2">
+    <div class="label">
+      <span id="status">Loading DuckDB…</span>
+      <span class="text-muted"> · data0 runs entirely in your browser · no trackers · no uploads</span>
+    </div>
+    <div class="label flex gap-4">
+      <a href="https://github.com/sponsors/shubhu121" class="hover:text-accent" rel="noopener">♡ sponsor</a>
+      <a href="https://github.com/shubhu121/zero" class="hover:text-ink" rel="noopener">github ↗</a>
+    </div>
+  </div>
+</footer>
