@@ -1,0 +1,99 @@
+/* Shared product-shell decisions. Hub tokens supply the color; this layer supplies
+   hierarchy, interaction, and rhythm without changing any tool's behavior. */
+:root {
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --control-radius: 0.5rem;
+}
+
+html { min-width: 20rem; }
+
+body {
+  line-height: 1.5;
+  letter-spacing: -0.008em;
+  text-rendering: optimizeLegibility;
+}
+
+a, button, input, select, textarea { -webkit-tap-highlight-color: transparent; }
+a { text-underline-offset: 0.18em; }
+
+input, select, textarea { border-radius: var(--control-radius); }
+
+.suite-bar { background: color-mix(in srgb, var(--bg) 94%, var(--accent)); }
+.suite-bar__inner { min-height: 2.625rem; }
+.suite-bar__divider { opacity: 0.45; }
+.suite-bar__nav, .suite-header nav { scrollbar-width: thin; }
+
+.suite-bar a,
+.suite-header a,
+.suite-footer a {
+  transition: color 160ms var(--ease-out), opacity 160ms var(--ease-out);
+}
+
+.suite-bar a[aria-current='page'] {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.suite-header {
+  position: relative;
+  background: var(--bg);
+}
+
+.suite-header nav a {
+  position: relative;
+  padding-bottom: 0.45rem;
+  text-decoration: none;
+}
+
+.suite-header nav a[aria-current='page']::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: -0.76rem;
+  left: 0;
+  height: 2px;
+  background: var(--accent);
+}
+
+.suite-main {
+  padding-top: clamp(2rem, 4vw, 3.75rem) !important;
+  padding-bottom: clamp(3rem, 6vw, 5rem) !important;
+}
+
+.suite-footer { background: var(--bg-raised); }
+
+.tool-layout > h1 {
+  max-width: 20ch;
+  text-wrap: balance;
+}
+
+.tool-trust {
+  display: inline-block;
+  max-width: 68ch;
+  padding-left: 0.75rem;
+  border-left: 2px solid var(--accent);
+  line-height: 1.55;
+}
+
+.tool-explainer { border-color: color-mix(in srgb, var(--rule) 70%, var(--accent)); }
+
+@media (hover: hover) and (pointer: fine) {
+  .suite-bar a:hover,
+  .suite-header a:hover,
+  .suite-footer a:hover { color: var(--accent); }
+
+  .btn:not(:disabled):hover,
+  .btn-secondary:not(:disabled):hover { transform: translateY(-1px); }
+}
+
+.btn:not(:disabled):active,
+.btn-secondary:not(:disabled):active { transform: scale(0.98); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

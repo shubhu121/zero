@@ -1,0 +1,34 @@
+---
+// SuiteBar — shared cross-hub nav for TabZero. Sits at the very top of every
+// hub page (above each hub's own Header) so you can jump between hubs anywhere.
+// Uses semantic tokens, so it inherits each route's per-hub theme automatically.
+const hubs = [
+  { href: '/dev0', label: 'dev0' },
+  { href: '/web0', label: 'web0' },
+  { href: '/data0', label: 'data0' },
+  { href: '/privacy0', label: 'privacy0' },
+  { href: '/ui0', label: 'ui0' },
+  { href: '/media0', label: 'media0' },
+  { href: '/ai0', label: 'ai0' },
+];
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isActive = (href: string) => path === href || path.startsWith(href + '/');
+---
+<div class="suite-bar border-b border-rule">
+  <div class="suite-bar__inner max-w-6xl mx-auto px-4 sm:px-6 flex items-center gap-5 text-xs">
+    <a
+      href="/"
+      class={`label hover:text-ink ${path === '/' ? 'text-accent' : ''}`}
+    >Tab<span class="text-accent">Zero</span></a>
+    <span class="suite-bar__divider text-rule-strong">/</span>
+    <nav class="suite-bar__nav flex items-center gap-4 overflow-x-auto" aria-label="TabZero hubs">
+      {hubs.map((h) => (
+        <a
+          href={h.href}
+          aria-current={isActive(h.href) ? 'page' : undefined}
+          class={`label hover:text-ink whitespace-nowrap ${isActive(h.href) ? 'text-accent' : ''}`}
+        >{h.label}</a>
+      ))}
+    </nav>
+  </div>
+</div>

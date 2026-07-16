@@ -1,0 +1,129 @@
+---
+// TabZero landing - terminal-mono vibe matching the hubs (dev0/web0/data0/
+// privacy0/ui0). Self-contained doc; pulls hub data from hub0/lib/suite.
+import '../hubs/hub0/styles/global.css';
+import { hubs, stats } from '../hubs/hub0/lib/suite';
+
+const title = 'TabZero - browser tools that respect you';
+const description =
+  'Zero-server, privacy-first developer, design, media and local-AI tools. 75 tools across seven hubs, all running in your browser. Nothing is uploaded.';
+const canonical = new URL('/', Astro.site).href;
+const wordmark = (name: string) => name.replace(/0$/, '');
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'TabZero',
+  description,
+  url: canonical,
+};
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#0a0a0b" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="TabZero" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+    <script is:inline>
+      const t = localStorage.getItem('0-theme');
+      document.documentElement.dataset.theme = t === 'paper' ? 'paper' : 'nocturne';
+    </script>
+  </head>
+  <body class="suite-landing bg-bg text-ink min-h-screen flex flex-col">
+    <header class="suite-header border-b border-rule">
+      <div class="suite-header__main max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-baseline justify-between gap-4">
+        <a href="/" class="display text-2xl tracking-tight">Tab<span class="text-accent">Zero</span></a>
+        <div class="flex items-center gap-5">
+          <button id="theme-toggle" class="label hover:text-ink" aria-label="Toggle theme">◐ theme</button>
+          <a href="https://github.com/shubhu121/zero" class="label hover:text-ink" rel="noopener">github ↗</a>
+          <a href="https://github.com/sponsors/shubhu121" class="label hover:text-accent" rel="noopener">♡ sponsor</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="suite-main flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-12 fade-in">
+      <section class="landing-hero">
+        <div class="max-w-3xl">
+          <p class="landing-eyebrow label mb-5">Private by architecture</p>
+          <h1 class="display text-4xl sm:text-6xl tracking-tight leading-[1.04]">
+            Browser tools that<br /><span class="text-accent">respect you.</span>
+          </h1>
+          <p class="mt-5 text-base text-muted max-w-xl leading-relaxed">
+            Zero-server, privacy-first utilities for developers and designers.
+            Everything runs in your browser - no accounts, no uploads, nothing to trust but the code.
+          </p>
+          <p class="label mt-4">75 tools · 0 servers · 0 trackers · 0 cookies · verify in DevTools → Network</p>
+        </div>
+        <aside class="landing-proof" aria-label="Privacy promise">
+          <p class="label text-ink">Your browser is the backend</p>
+          <p class="mt-2 text-sm text-muted leading-relaxed">Paste sensitive data, inspect local files, or run a model without handing either to a service. The page does the work.</p>
+        </aside>
+      </section>
+
+      <section class="mt-12" aria-labelledby="suite-directory">
+        <div class="landing-directory-intro mb-4">
+          <h2 id="suite-directory" class="label text-ink">Choose a workspace</h2>
+          <p class="label">One job per URL. Bookmarkable by default.</p>
+        </div>
+        <div class="hub-directory border border-rule rounded-lg overflow-hidden divide-y divide-rule">
+          {hubs.map((hub) => (
+            <div class="hub-row bg-bg p-5 sm:p-6 transition-colors" style={`--hub-light: ${hub.accent}; --hub-dark: ${hub.accentDark}`}>
+              <div class="flex items-baseline gap-3 flex-wrap">
+                <a href={hub.url} class="stretch display text-2xl tracking-tight hover:opacity-80 transition-opacity">
+                  {wordmark(hub.name)}<span style="color: var(--hub)">0</span>
+                </a>
+                <span class="label" style="color: var(--hub)">{hub.tagline}</span>
+                <a href={hub.url} class="label ml-auto hover:text-ink whitespace-nowrap relative z-10">{hub.count} tools →</a>
+              </div>
+              <p class="mt-2 text-sm text-muted leading-relaxed max-w-3xl">{hub.desc}</p>
+              <div class="mt-3 flex flex-wrap gap-2">
+                {hub.tools.map((tool) => <a href={tool.href} class="tool-chip">{tool.name}</a>)}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="suite-stats mt-10 grid grid-cols-2 sm:grid-cols-4 gap-px bg-rule border border-rule rounded-lg overflow-hidden" aria-label="Suite at a glance">
+        {stats.map((stat) => (
+          <div class="bg-bg p-6 text-center">
+            <div class:list={['display text-3xl sm:text-4xl tabular-nums', stat.accent && 'text-accent']}>{stat.num}</div>
+            <div class="label mt-1">{stat.label}</div>
+          </div>
+        ))}
+      </section>
+
+      <section class="landing-rationale mt-12 border-t border-rule pt-6 max-w-2xl text-sm text-muted leading-relaxed">
+        <h2 class="label text-ink">Why TabZero?</h2>
+        <p class="mt-2">Most online tools - JWT decoders, SQL runners, image and metadata tools - are SaaS pages that can log whatever you paste. That's a problem when the thing you're handling is a production token, a customer file, or a private document. TabZero runs every tool in your browser: nothing is uploaded, there are no accounts, and you can confirm zero network activity in DevTools → Network. Seven focused hubs, 75 tools, one real URL each - easy to bookmark and share.</p>
+      </section>
+    </main>
+
+    <footer class="suite-footer border-t border-rule">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6 flex flex-col sm:flex-row justify-between gap-2">
+        <div class="label">TabZero · runs entirely in your browser · no trackers · no uploads</div>
+        <div class="label flex gap-4">
+          <a href="https://github.com/sponsors/shubhu121" class="hover:text-accent" rel="noopener">♡ sponsor</a>
+          <a href="https://github.com/shubhu121/zero" class="hover:text-ink" rel="noopener">github ↗</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      import { initThemeToggle } from '../hubs/hub0/scripts/theme';
+      initThemeToggle(document.getElementById('theme-toggle')!);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,66 @@
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/500.css';
+@import '@fontsource/jetbrains-mono/600.css';
+@import '@fontsource/jetbrains-mono/700.css';
+@import './tokens.css';
+@import '../../../styles/suite.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Mono', monospace;
+  --font-display: 'JetBrains Mono', ui-monospace, 'Cascadia Mono', monospace;
+  --font-body: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+body { font-family: var(--font-body); -webkit-font-smoothing: antialiased; }
+h1, h2, h3, .display { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.04em; }
+code, pre, input, textarea, select, .mono { font-family: var(--font-mono); }
+
+*:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.label { font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--muted); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .fade-in { animation: fadeIn 200ms ease-out both; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: none; } }
+}
+
+/* Landing hub directory rows + tool chips */
+/* Per-hub accent, theme-aware so it matches each hub page exactly. */
+.hub-row { --hub: var(--hub-light); position: relative; cursor: pointer; transition: background 180ms var(--ease-out), padding 180ms var(--ease-out); }
+[data-theme="nocturne"] .hub-row { --hub: var(--hub-dark); }
+.hub-row::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 3px; background: var(--hub); transform: scaleY(0.2); transform-origin: center; transition: transform 180ms var(--ease-out); }
+.hub-row:hover { background: color-mix(in srgb, var(--hub) 5%, var(--bg-raised)); }
+.hub-row:hover::before { transform: scaleY(1); }
+/* Whole row clickable, tool chips sit above it. */
+.hub-row .stretch::after { content: ""; position: absolute; inset: 0; z-index: 0; }
+.tool-chip {
+  font-family: var(--font-mono); font-size: 0.72rem;
+  padding: 0.2rem 0.5rem; border-radius: 3px;
+  border: 1px solid var(--rule); color: var(--muted);
+  transition: color .12s, border-color .12s; white-space: nowrap;
+  position: relative; z-index: 1;
+}
+.tool-chip:hover { color: var(--ink); border-color: var(--hub); }
+
+.suite-landing { position: relative; }
+.landing-hero { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(16rem, 0.5fr); gap: clamp(2rem, 6vw, 6rem); align-items: end; padding-bottom: clamp(2.5rem, 6vw, 5rem); border-bottom: 1px solid var(--rule); }
+.landing-eyebrow { color: var(--accent); }
+.landing-proof { max-width: 24rem; padding: 1rem 0 0 1rem; border-top: 1px solid var(--rule-strong); border-left: 2px solid var(--accent); }
+.landing-directory-intro { display: flex; align-items: end; justify-content: space-between; gap: 1.5rem; }
+.hub-directory { box-shadow: 0 1rem 3rem color-mix(in srgb, var(--ink) 6%, transparent); }
+.suite-stats > div { position: relative; }
+.suite-stats > div + div::before { content: ""; position: absolute; inset: 1rem auto 1rem 0; width: 1px; background: var(--rule); }
+.landing-rationale { border-color: color-mix(in srgb, var(--rule) 70%, var(--accent)); }
+
+@media (max-width: 700px) {
+  .landing-hero { grid-template-columns: 1fr; gap: 2rem; }
+  .landing-proof { max-width: none; }
+  .landing-directory-intro { align-items: start; flex-direction: column; gap: 0.5rem; }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hub-row:hover { padding-left: 1.7rem; }
+}
