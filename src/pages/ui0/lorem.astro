@@ -1,0 +1,51 @@
+---
+import Base from '../../hubs/ui0/layouts/Base.astro';
+import Header from '../../hubs/ui0/components/Header.astro';
+import Footer from '../../hubs/ui0/components/Footer.astro';
+import ToolLayout from '../../hubs/ui0/components/ToolLayout.astro';
+---
+<Base
+  title="Lorem Ipsum Generator (words, sentences, paragraphs) | ui0"
+  description="Generate placeholder lorem ipsum text by words, sentences or paragraphs, with optional HTML wrapping. 100% in your browser."
+>
+  <Header />
+  <main class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8">
+    <ToolLayout name="Lorem Ipsum Generator">
+      <div class="max-w-3xl space-y-4">
+        <div class="flex items-end gap-4 flex-wrap">
+          <label class="text-xs text-muted">Amount
+            <input id="lo-count" type="number" value="3" min="1" max="100" class="block w-20 mt-1 bg-raised border border-rule rounded px-2 py-1.5 text-sm font-mono text-ink focus:outline-none" />
+          </label>
+          <label class="text-xs text-muted">Unit
+            <select id="lo-unit" class="block mt-1 bg-raised border border-rule rounded px-2 py-1.5 text-sm font-mono text-ink focus:outline-none">
+              <option value="paragraphs">Paragraphs</option>
+              <option value="sentences">Sentences</option>
+              <option value="words">Words</option>
+            </select>
+          </label>
+          <label class="flex items-center gap-1.5 text-xs text-muted cursor-pointer"><input id="lo-start" type="checkbox" checked class="accent-accent" /> Start with “Lorem ipsum…”</label>
+          <label class="flex items-center gap-1.5 text-xs text-muted cursor-pointer"><input id="lo-html" type="checkbox" class="accent-accent" /> Wrap in &lt;p&gt;</label>
+          <button id="lo-regen" class="btn ml-auto">↻ Regenerate</button>
+        </div>
+
+        <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+          <div class="px-4 py-2.5 border-b border-rule flex items-center justify-between">
+            <span class="label">Output</span>
+            <button id="lo-copy" class="text-[10px] font-medium px-2 py-1 rounded-sm bg-bg border border-rule text-ink hover:bg-raised transition-colors">Copy</button>
+          </div>
+          <textarea id="lo-output" class="w-full h-72 p-4 bg-transparent text-sm leading-relaxed text-ink resize-none focus:outline-none" readonly></textarea>
+        </div>
+      </div>
+
+      <div slot="explainer">
+        <p class="mb-2">Generate filler text for mockups and layouts: choose paragraphs, sentences or words, set the amount, and optionally start with the classic “Lorem ipsum dolor sit amet…” opening. Toggle HTML wrapping to get <code>&lt;p&gt;</code> tags ready to paste into markup.</p>
+        <p>Generated locally in your browser — instant and offline-friendly.</p>
+      </div>
+    </ToolLayout>
+  </main>
+  <Footer />
+</Base>
+<script>
+  import { initLorem } from '../../hubs/ui0/scripts/tools/lorem';
+  initLorem();
+</script>

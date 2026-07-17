@@ -1,0 +1,56 @@
+---
+import Base from '../../hubs/ui0/layouts/Base.astro';
+import Header from '../../hubs/ui0/components/Header.astro';
+import Footer from '../../hubs/ui0/components/Footer.astro';
+import ToolLayout from '../../hubs/ui0/components/ToolLayout.astro';
+
+const sizes = [512, 180, 32, 16];
+---
+<Base
+  title="Favicon Generator (letter / emoji → PNG) | ui0"
+  description="Make a favicon from a letter or emoji on a colored shape, and download PNGs at 16, 32, 180 and 512px. 100% in your browser."
+>
+  <Header />
+  <main class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8">
+    <ToolLayout name="Favicon Generator">
+      <div class="grid sm:grid-cols-[1fr_240px] gap-6 max-w-3xl">
+        <div class="space-y-4">
+          <label class="block text-xs text-muted">Letter or emoji (1–2 chars)
+            <input id="fv-text" type="text" maxlength="4" class="block w-full mt-1 bg-raised border border-rule rounded px-3 py-2 text-sm font-mono text-ink focus:outline-none" />
+          </label>
+          <div class="flex items-center gap-5">
+            <label class="text-xs text-muted flex items-center gap-2">Background <input id="fv-bg" type="color" value="#c2410c" class="h-8 w-10 rounded border border-rule bg-transparent cursor-pointer" /></label>
+            <label class="text-xs text-muted flex items-center gap-2">Text <input id="fv-fg" type="color" value="#ffffff" class="h-8 w-10 rounded border border-rule bg-transparent cursor-pointer" /></label>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs text-muted">Shape:</span>
+            <div class="inline-flex bg-raised border border-rule rounded-sm p-0.5">
+              <button data-fv-shape="square" class="fv-shape-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors text-muted">Square</button>
+              <button data-fv-shape="rounded" class="fv-shape-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors bg-bg text-accent">Rounded</button>
+              <button data-fv-shape="circle" class="fv-shape-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors text-muted">Circle</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          <canvas id="fv-preview" width="256" height="256" class="w-full max-w-[200px] mx-auto rounded-lg border border-rule" aria-label="Favicon preview"></canvas>
+          <div class="grid grid-cols-2 gap-2">
+            {sizes.map((s) => (
+              <button class="fv-dl btn-secondary text-xs" data-fv-dl={s}>{s}×{s}</button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div slot="explainer">
+        <p class="mb-2">Create a simple favicon from a letter, initials or an emoji on a colored square, rounded square or circle. Preview it live, then download PNGs at 512 (maskable / PWA), 180 (Apple touch icon), 32 and 16px.</p>
+        <p>Rendering uses the HTML canvas in your browser — nothing is uploaded. Reference the files in your HTML, e.g. <code>&lt;link rel="icon" href="/favicon-32.png"&gt;</code>.</p>
+      </div>
+    </ToolLayout>
+  </main>
+  <Footer />
+</Base>
+<script>
+  import { initFavicon } from '../../hubs/ui0/scripts/tools/favicon';
+  initFavicon();
+</script>

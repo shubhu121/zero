@@ -1,0 +1,56 @@
+---
+import Base from '../../hubs/ui0/layouts/Base.astro';
+import Header from '../../hubs/ui0/components/Header.astro';
+import Footer from '../../hubs/ui0/components/Footer.astro';
+import ToolLayout from '../../hubs/ui0/components/ToolLayout.astro';
+---
+<Base
+  title="QR Code Generator (SVG & PNG, custom colors) | ui0"
+  description="Generate a QR code from any text or URL with custom colors and error correction, exportable as SVG or PNG. 100% in your browser."
+>
+  <Header />
+  <main class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8">
+    <ToolLayout name="QR Code Generator">
+      <div class="grid sm:grid-cols-[1fr_280px] gap-6 max-w-3xl">
+        <div class="space-y-4">
+          <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+            <div class="px-4 py-2.5 border-b border-rule"><span class="label">Text or URL</span></div>
+            <textarea id="qr-input" class="w-full h-28 p-4 bg-transparent text-sm font-mono text-ink resize-none focus:outline-none" spellcheck="false"></textarea>
+          </div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="text-xs text-muted">Error correction:</span>
+            <div class="inline-flex bg-raised border border-rule rounded-sm p-0.5">
+              <button data-qr-ecc="L" class="qr-ecc-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors text-muted">L</button>
+              <button data-qr-ecc="M" class="qr-ecc-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors bg-bg text-accent">M</button>
+              <button data-qr-ecc="Q" class="qr-ecc-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors text-muted">Q</button>
+              <button data-qr-ecc="H" class="qr-ecc-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors text-muted">H</button>
+            </div>
+          </div>
+          <div class="flex items-center gap-5">
+            <label class="text-xs text-muted flex items-center gap-2">Foreground <input id="qr-fg" type="color" value="#1c1917" class="h-8 w-10 rounded border border-rule bg-transparent cursor-pointer" /></label>
+            <label class="text-xs text-muted flex items-center gap-2">Background <input id="qr-bg" type="color" value="#ffffff" class="h-8 w-10 rounded border border-rule bg-transparent cursor-pointer" /></label>
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          <div id="qr-svg" class="w-full aspect-square rounded-lg border border-rule bg-bg p-3 flex items-center justify-center"></div>
+          <div id="qr-error" class="hidden px-3 py-2 rounded-sm bg-raised border border-err text-xs text-err font-mono"></div>
+          <div class="flex gap-2">
+            <button id="qr-dl-svg" class="btn-secondary flex-1">SVG</button>
+            <button id="qr-dl-png" class="btn flex-1">PNG</button>
+          </div>
+        </div>
+      </div>
+
+      <div slot="explainer">
+        <p class="mb-2">Turn a link, Wi-Fi string, contact card or any text into a QR code. Higher error-correction levels (Q, H) survive more damage or logo overlays at the cost of denser codes. Pick custom foreground and background colors — keep strong contrast so scanners read it reliably.</p>
+        <p>The code is rendered as crisp vector SVG (also exportable as PNG) entirely in your browser; the encoded content is never uploaded.</p>
+      </div>
+    </ToolLayout>
+  </main>
+  <Footer />
+</Base>
+<script>
+  import { initQr } from '../../hubs/ui0/scripts/tools/qr';
+  initQr();
+</script>

@@ -1,0 +1,58 @@
+---
+import Base from '../../hubs/ui0/layouts/Base.astro';
+import Header from '../../hubs/ui0/components/Header.astro';
+import Footer from '../../hubs/ui0/components/Footer.astro';
+import ToolLayout from '../../hubs/ui0/components/ToolLayout.astro';
+---
+<Base
+  title="URL Encoder / Decoder + URL parser | ui0"
+  description="Percent-encode and decode URLs and query strings, and break a URL into its parts. 100% in your browser, nothing uploaded."
+>
+  <Header />
+  <main class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8">
+    <ToolLayout name="URL Encoder / Decoder">
+      <div class="space-y-4">
+        <div class="flex items-center gap-2 flex-wrap">
+          <div class="inline-flex bg-raised border border-rule rounded-sm p-0.5">
+            <button data-ur-mode="encode" class="ur-mode-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors bg-bg text-accent">Encode</button>
+            <button data-ur-mode="decode" class="ur-mode-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors text-muted">Decode</button>
+          </div>
+          <div class="inline-flex bg-raised border border-rule rounded-sm p-0.5 ml-2">
+            <button data-ur-kind="component" class="ur-kind-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors bg-bg text-accent">Component</button>
+            <button data-ur-kind="uri" class="ur-kind-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors text-muted">Full URI</button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+            <div class="px-4 py-2.5 border-b border-rule"><span class="label">Input</span></div>
+            <textarea id="ur-input" class="w-full h-40 p-4 bg-transparent text-sm font-mono text-ink resize-none focus:outline-none" spellcheck="false"></textarea>
+          </div>
+          <div class="rounded-sm border border-rule bg-raised overflow-hidden">
+            <div class="px-4 py-2.5 border-b border-rule flex items-center justify-between">
+              <span class="label">Output</span>
+              <button id="ur-copy" class="text-[10px] font-medium px-2 py-1 rounded-sm bg-bg border border-rule text-ink hover:bg-raised transition-colors">Copy</button>
+            </div>
+            <textarea id="ur-output" class="w-full h-40 p-4 bg-transparent text-sm font-mono text-ink resize-none focus:outline-none" readonly></textarea>
+          </div>
+        </div>
+        <div id="ur-error" class="hidden px-4 py-2 rounded-sm bg-raised border border-err text-xs text-err font-mono"></div>
+
+        <div class="rounded border border-rule bg-raised p-4">
+          <span class="label">URL parts</span>
+          <div id="ur-parts" class="mt-2"></div>
+        </div>
+      </div>
+
+      <div slot="explainer">
+        <p class="mb-2">Percent-encode text for safe use in URLs, or decode an encoded string back to readable text. "Component" mode uses <code>encodeURIComponent</code> (escapes <code>?</code>, <code>&amp;</code>, <code>/</code> and more — for query values), while "Full URI" uses <code>encodeURI</code>, which leaves URL structure intact.</p>
+        <p>Paste a complete URL and the parts panel breaks it into protocol, host, path, hash and a table of query parameters. All local — your URLs are never uploaded.</p>
+      </div>
+    </ToolLayout>
+  </main>
+  <Footer />
+</Base>
+<script>
+  import { initUrl } from '../../hubs/ui0/scripts/tools/url';
+  initUrl();
+</script>

@@ -1,0 +1,60 @@
+---
+import Base from '../../hubs/ui0/layouts/Base.astro';
+import Header from '../../hubs/ui0/components/Header.astro';
+import Footer from '../../hubs/ui0/components/Footer.astro';
+import ToolLayout from '../../hubs/ui0/components/ToolLayout.astro';
+
+const formats = [
+  { id: 'co-hex', label: 'HEX' },
+  { id: 'co-rgb', label: 'RGB' },
+  { id: 'co-hsl', label: 'HSL' },
+  { id: 'co-hsv', label: 'HSV' },
+];
+---
+<Base
+  title="Color Picker & Converter (HEX, RGB, HSL, HSV) + contrast | ui0"
+  description="Pick a color and convert between HEX, RGB, HSL and HSV, with a WCAG contrast check against black and white. 100% in your browser."
+>
+  <Header />
+  <main class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8">
+    <ToolLayout name="Color Picker & Converter">
+      <div class="grid sm:grid-cols-[200px_1fr] gap-6 max-w-3xl">
+        <div class="space-y-3">
+          <div id="co-swatch" class="w-full aspect-square rounded-lg border border-rule shadow-inner"></div>
+          <input id="co-picker" type="color" class="w-full h-10 rounded border border-rule cursor-pointer bg-transparent" aria-label="Color picker" />
+        </div>
+        <div class="space-y-2">
+          {formats.map((f) => (
+            <div class="flex items-center gap-3 px-3 py-2 rounded border border-rule bg-raised">
+              <span class="label w-10 shrink-0">{f.label}</span>
+              {f.id === 'co-hex'
+                ? <input id="co-hex" type="text" class="flex-1 bg-transparent text-sm font-mono text-ink focus:outline-none" spellcheck="false" />
+                : <code id={f.id} class="flex-1 text-sm font-mono text-ink select-all"></code>}
+              <button class="co-copy text-[10px] text-muted hover:text-ink" data-co-copy={f.id}>copy</button>
+            </div>
+          ))}
+          <div class="grid grid-cols-2 gap-2 pt-1">
+            <div class="px-3 py-2 rounded border border-rule">
+              <span class="label">vs white</span>
+              <div id="co-contrast-white" class="text-sm font-mono text-ink mt-1"></div>
+            </div>
+            <div class="px-3 py-2 rounded border border-rule">
+              <span class="label">vs black</span>
+              <div id="co-contrast-black" class="text-sm font-mono text-ink mt-1"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div slot="explainer">
+        <p class="mb-2">Pick a color or type a HEX value and instantly see its RGB, HSL and HSV equivalents, each copyable. The contrast panel shows the WCAG contrast ratio of the color against white and black text, with the pass level (AA, AAA, or AA-large), so you can check legibility at a glance.</p>
+        <p>All conversions are pure math running in your browser — no API, no tracking.</p>
+      </div>
+    </ToolLayout>
+  </main>
+  <Footer />
+</Base>
+<script>
+  import { initColor } from '../../hubs/ui0/scripts/tools/color';
+  initColor();
+</script>

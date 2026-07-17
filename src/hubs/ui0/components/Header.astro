@@ -1,0 +1,37 @@
+---
+const tools = [
+  { href: '/ui0/color', label: 'color' },
+  { href: '/ui0/gradient', label: 'gradient' },
+  { href: '/ui0/meta', label: 'meta' },
+  { href: '/ui0/favicon', label: 'favicon' },
+  { href: '/ui0/qr', label: 'qr' },
+  { href: '/ui0/url', label: 'url' },
+  { href: '/ui0/lorem', label: 'lorem' },
+];
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+<header class="suite-header border-b border-rule">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-5 pb-3 flex items-baseline justify-between gap-4">
+    <a href="/ui0" class="display text-2xl tracking-tight">ui<span class="text-accent">0</span></a>
+    <div class="flex items-center gap-5">
+      <button id="theme-toggle" class="label hover:text-ink" aria-label="Toggle theme">◐ theme</button>
+      <a href="https://github.com/shubhu121/zero" class="label hover:text-ink" rel="noopener">github ↗</a>
+      <a href="https://github.com/sponsors/shubhu121" class="label hover:text-accent" rel="noopener">♡ sponsor</a>
+    </div>
+  </div>
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 pb-3 overflow-x-auto" aria-label="Tools">
+    <div class="flex gap-5 min-w-max">
+      {tools.map((t) => (
+        <a href={t.href}
+          aria-current={path === t.href ? 'page' : undefined}
+          class={`label hover:text-ink ${path === t.href ? 'text-accent underline underline-offset-4' : ''}`}>
+          {t.label}
+        </a>
+      ))}
+    </div>
+  </nav>
+</header>
+<script>
+  import { initThemeToggle } from '../scripts/theme';
+  initThemeToggle(document.getElementById('theme-toggle')!);
+</script>

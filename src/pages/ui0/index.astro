@@ -1,0 +1,54 @@
+---
+import Base from '../../hubs/ui0/layouts/Base.astro';
+import Header from '../../hubs/ui0/components/Header.astro';
+import Footer from '../../hubs/ui0/components/Footer.astro';
+
+const tools = [
+  { href: '/ui0/color', name: 'Color Picker & Converter', desc: 'HEX ⇄ RGB ⇄ HSL ⇄ HSV with a WCAG contrast check.' },
+  { href: '/ui0/gradient', name: 'CSS Gradient Maker', desc: 'Linear & radial gradients with a live preview and copyable CSS.' },
+  { href: '/ui0/meta', name: 'Meta & Open Graph Tags', desc: 'Generate SEO + social tags with Google and card previews.' },
+  { href: '/ui0/favicon', name: 'Favicon Generator', desc: 'Letter or emoji on a shape → PNGs at 16–512px.' },
+  { href: '/ui0/qr', name: 'QR Code Generator', desc: 'Any text or URL → crisp QR, exportable as SVG or PNG.' },
+  { href: '/ui0/url', name: 'URL Encoder / Decoder', desc: 'Percent-encode, decode and break a URL into its parts.' },
+  { href: '/ui0/lorem', name: 'Lorem Ipsum Generator', desc: 'Placeholder text by words, sentences or paragraphs.' },
+];
+---
+<Base
+  title="ui0 - browser design & web tools, nothing leaves this page"
+  description="Client-side design and web utilities: color picker, gradient maker, favicon and QR generators, meta-tag preview, URL encoder and lorem ipsum. Everything runs in your browser."
+>
+  <Header />
+  <main class="suite-main flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8">
+    <div class="fade-in">
+      <section class="max-w-2xl">
+        <h1 class="display text-4xl sm:text-6xl tracking-tight leading-[1.05]">
+          Design & web tools.<br />
+          <span class="text-accent">Nothing leaves this page.</span>
+        </h1>
+        <p class="label mt-5">100% client-side · 0 trackers · 0 cookies · verify in DevTools → Network</p>
+      </section>
+
+      <section class="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-px bg-rule border border-rule rounded overflow-hidden">
+        {tools.map((t, i) => (
+          <a href={t.href} class:list={["group bg-bg p-5 hover:bg-raised transition-colors", tools.length % 2 === 1 && i === tools.length - 1 && "sm:col-span-2"]}>
+            <div class="flex items-baseline justify-between gap-2">
+              <span class="font-semibold text-ink group-hover:text-accent transition-colors">{t.name}</span>
+              <span class="label text-muted group-hover:text-accent transition-colors">→</span>
+            </div>
+            <p class="mt-1 text-sm text-muted leading-relaxed">{t.desc}</p>
+          </a>
+        ))}
+      </section>
+
+      <section class="mt-12 border-t border-rule pt-6 max-w-2xl text-sm text-muted leading-relaxed">
+        <h2 class="label text-ink">Why ui0?</h2>
+        <p class="mt-2">Most online design utilities — color converters, gradient makers, favicon and QR generators — are
+        ad-heavy pages that may track what you paste and what you build. ui0 runs every tool in your browser:
+        colors, gradients, favicons, QR codes and meta tags are all generated client-side, with no accounts and
+        no uploads. Open DevTools → Network and you'll see zero outbound requests while you work. One real URL
+        per tool, easy to bookmark and share.</p>
+      </section>
+    </div>
+  </main>
+  <Footer />
+</Base>

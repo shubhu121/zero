@@ -1,0 +1,74 @@
+---
+import Base from '../../hubs/ui0/layouts/Base.astro';
+import Header from '../../hubs/ui0/components/Header.astro';
+import Footer from '../../hubs/ui0/components/Footer.astro';
+import ToolLayout from '../../hubs/ui0/components/ToolLayout.astro';
+---
+<Base
+  title="Meta Tag & Open Graph Generator with preview | ui0"
+  description="Generate SEO meta tags and Open Graph / Twitter cards with a live Google and social-card preview. 100% in your browser."
+>
+  <Header />
+  <main class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8">
+    <ToolLayout name="Meta & Open Graph Tags">
+      <div class="grid lg:grid-cols-2 gap-8">
+        <!-- Form -->
+        <div class="space-y-4">
+          <label class="block text-xs text-muted">Title
+            <input id="mt-title" type="text" class="block w-full mt-1 bg-raised border border-rule rounded px-3 py-2 text-sm text-ink focus:outline-none focus:border-accent" />
+          </label>
+          <label class="block text-xs text-muted">Description
+            <textarea id="mt-desc" rows="3" class="block w-full mt-1 bg-raised border border-rule rounded px-3 py-2 text-sm text-ink focus:outline-none focus:border-accent resize-y"></textarea>
+          </label>
+          <label class="block text-xs text-muted">Canonical URL
+            <input id="mt-url" type="text" class="block w-full mt-1 bg-raised border border-rule rounded px-3 py-2 text-sm font-mono text-ink focus:outline-none focus:border-accent" spellcheck="false" />
+          </label>
+          <label class="block text-xs text-muted">Image URL (og:image)
+            <input id="mt-image" type="text" class="block w-full mt-1 bg-raised border border-rule rounded px-3 py-2 text-sm font-mono text-ink focus:outline-none focus:border-accent" spellcheck="false" placeholder="https://… (1200×630 recommended)" />
+          </label>
+        </div>
+
+        <!-- Previews -->
+        <div class="space-y-5">
+          <div>
+            <span class="label">Google result</span>
+            <div class="mt-2 p-3 rounded border border-rule bg-bg">
+              <div id="mt-g-url" class="text-xs text-ok truncate"></div>
+              <div id="mt-g-title" class="text-lg text-accent leading-snug truncate"></div>
+              <div id="mt-g-desc" class="text-sm text-muted leading-snug"></div>
+            </div>
+          </div>
+          <div>
+            <span class="label">Social card</span>
+            <div class="mt-2 rounded-lg border border-rule overflow-hidden bg-bg">
+              <img id="mt-card-img" alt="og preview" class="w-full aspect-[1.91/1] object-cover bg-raised" />
+              <div class="p-3 border-t border-rule">
+                <div id="mt-card-domain" class="text-[10px] uppercase tracking-wider text-muted"></div>
+                <div id="mt-card-title" class="text-sm font-semibold text-ink leading-snug mt-0.5"></div>
+                <div id="mt-card-desc" class="text-xs text-muted leading-snug mt-0.5"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 rounded-sm border border-rule bg-raised overflow-hidden max-w-3xl">
+        <div class="px-4 py-2.5 border-b border-rule flex items-center justify-between">
+          <span class="label">Generated tags — paste into &lt;head&gt;</span>
+          <button id="mt-copy" class="text-[10px] font-medium px-2 py-1 rounded-sm bg-bg border border-rule text-ink hover:bg-raised transition-colors">Copy tags</button>
+        </div>
+        <textarea id="mt-output" class="w-full h-56 p-4 bg-transparent text-xs font-mono text-ink resize-none focus:outline-none" readonly></textarea>
+      </div>
+
+      <div slot="explainer">
+        <p class="mb-2">Fill in your title, description, URL and preview image to generate a complete set of SEO and social meta tags — <code>description</code>, canonical, Open Graph and Twitter Card — and see live how the page will look as a Google result and a shared social card.</p>
+        <p>Everything is generated locally in your browser. The image preview is loaded directly by your browser from the URL you enter; no data is sent to us.</p>
+      </div>
+    </ToolLayout>
+  </main>
+  <Footer />
+</Base>
+<script>
+  import { initMeta } from '../../hubs/ui0/scripts/tools/meta';
+  initMeta();
+</script>

@@ -1,0 +1,56 @@
+---
+import Base from '../../hubs/ui0/layouts/Base.astro';
+import Header from '../../hubs/ui0/components/Header.astro';
+import Footer from '../../hubs/ui0/components/Footer.astro';
+import ToolLayout from '../../hubs/ui0/components/ToolLayout.astro';
+---
+<Base
+  title="CSS Gradient Generator (linear & radial) | ui0"
+  description="Build linear and radial CSS gradients with a live preview and copyable CSS, in your browser. Nothing is uploaded."
+>
+  <Header />
+  <main class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8">
+    <ToolLayout name="CSS Gradient Maker">
+      <div class="max-w-3xl space-y-5">
+        <div id="gr-preview" class="w-full h-56 rounded-lg border border-rule"></div>
+
+        <div class="flex flex-wrap items-end gap-5">
+          <div class="inline-flex bg-raised border border-rule rounded-sm p-0.5">
+            <button data-gr-type="linear" class="gr-type-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors bg-bg text-accent">Linear</button>
+            <button data-gr-type="radial" class="gr-type-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors text-muted">Radial</button>
+          </div>
+          <label class="text-xs text-muted">Stop 1
+            <div class="flex items-center gap-2 mt-1">
+              <input id="gr-c1" type="color" value="#c2410c" class="h-8 w-10 rounded border border-rule bg-transparent cursor-pointer" />
+              <input id="gr-p1" type="number" value="0" min="0" max="100" class="w-16 bg-raised border border-rule rounded px-2 py-1 text-xs font-mono text-ink focus:outline-none" />
+            </div>
+          </label>
+          <label class="text-xs text-muted">Stop 2
+            <div class="flex items-center gap-2 mt-1">
+              <input id="gr-c2" type="color" value="#fb923c" class="h-8 w-10 rounded border border-rule bg-transparent cursor-pointer" />
+              <input id="gr-p2" type="number" value="100" min="0" max="100" class="w-16 bg-raised border border-rule rounded px-2 py-1 text-xs font-mono text-ink focus:outline-none" />
+            </div>
+          </label>
+          <label id="gr-angle-wrap" class="text-xs text-muted">Angle <span id="gr-angle-val" class="text-accent font-mono">90°</span>
+            <input id="gr-angle" type="range" min="0" max="360" value="90" class="block w-40 accent-accent mt-1" />
+          </label>
+        </div>
+
+        <div class="flex items-center gap-3 px-4 py-3 rounded border border-rule bg-raised">
+          <code id="gr-css" class="flex-1 text-sm font-mono text-ink break-all select-all"></code>
+          <button id="gr-copy" class="btn shrink-0">Copy CSS</button>
+        </div>
+      </div>
+
+      <div slot="explainer">
+        <p class="mb-2">Compose a CSS gradient visually: choose linear or radial, set two color stops and their positions, and rotate the angle for linear gradients. The preview updates live and the exact <code>background</code> declaration is ready to copy into your stylesheet.</p>
+        <p>Everything runs in your browser — no sign-up, no uploads.</p>
+      </div>
+    </ToolLayout>
+  </main>
+  <Footer />
+</Base>
+<script>
+  import { initGradient } from '../../hubs/ui0/scripts/tools/gradient';
+  initGradient();
+</script>
