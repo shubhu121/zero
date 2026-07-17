@@ -1,0 +1,28 @@
+﻿---
+import Base from '../../hubs/privacy0/layouts/Base.astro';
+import Header from '../../hubs/privacy0/components/Header.astro';
+import Footer from '../../hubs/privacy0/components/Footer.astro';
+import ToolLayout from '../../hubs/privacy0/components/ToolLayout.astro';
+---
+<Base title="Fingerprint Inspector · privacy0" description="See what your browser reveals about you: user agent, canvas hash, WebGL renderer, screen resolution and more.">
+  <Header />
+  <main class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8">
+    <ToolLayout name="Fingerprint Inspector" trust="All data is collected locally and never sent anywhere. This tool shows you what trackers can see.">
+      <div slot="explainer">
+        <p class="mb-2">Browser fingerprinting combines stable attributes to identify you across sessions without cookies. A unique canvas rendering hash alone can track you across sites.</p>
+        <p>Each attribute shows a risk level and a concrete mitigation. Tor Browser and Firefox with <code>privacy.resistFingerprinting</code> offer the strongest protection.</p>
+      </div>
+
+      <div class="mb-6">
+        <button id="fp-scan" class="btn">Scan my browser</button>
+      </div>
+      <div id="fp-results"></div>
+    </ToolLayout>
+  </main>
+  <Footer />
+</Base>
+
+<script>
+  import { initFingerprint } from '../../hubs/privacy0/scripts/tools/fingerprint';
+  initFingerprint();
+</script>

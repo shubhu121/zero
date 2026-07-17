@@ -1,0 +1,54 @@
+---
+import Base from '../../hubs/privacy0/layouts/Base.astro';
+import Header from '../../hubs/privacy0/components/Header.astro';
+import Footer from '../../hubs/privacy0/components/Footer.astro';
+
+const tools = [
+  { href: '/privacy0/scrub', name: 'PII Scrubber', desc: 'Detect and redact emails, phones, SSNs, credit cards, Aadhaar, PAN, IBANs and IPs. Review before you apply.' },
+  { href: '/privacy0/metadata', name: 'Metadata Stripper', desc: 'Inspect and strip EXIF from images and metadata from PDFs. Download a clean copy.' },
+  { href: '/privacy0/notes', name: 'Encrypted Notes', desc: 'AES-256-GCM notes locked by a passphrase. Stored encrypted in your browser, export any time.' },
+  { href: '/privacy0/fingerprint', name: 'Fingerprint Inspector', desc: 'See what trackers know about your browser: canvas hash, WebGL renderer, screen, timezone and more.' },
+  { href: '/privacy0/password', name: 'Password Generator', desc: 'Cryptographically strong random passwords with a live entropy estimate. Nothing stored.' },
+  { href: '/privacy0/filehash', name: 'File Hash Checker', desc: 'SHA-1/256/384/512 of any file, with verify-against-expected. The file never leaves your device.' },
+  { href: '/privacy0/steganography', name: 'Image Steganography', desc: 'Hide a secret message inside a PNG with LSB encoding, and reveal hidden messages back out.' },
+];
+---
+<Base title="privacy0 - browser-native privacy tools" description="PII scrubber, metadata stripper, encrypted notes, fingerprint inspector. All client-side, nothing is ever uploaded.">
+  <Header />
+  <main class="suite-main flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8">
+    <div class="fade-in">
+      <section class="max-w-2xl">
+        <h1 class="display text-4xl sm:text-6xl tracking-tight leading-[1.05]">
+          Scrub it before<br />
+          <span class="text-accent">you share it.</span>
+        </h1>
+        <p class="label mt-5">100% client-side · 0 trackers · 0 cookies · verify in DevTools → Network</p>
+      </section>
+
+      <section class="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-px bg-rule border border-rule rounded overflow-hidden">
+        {tools.map((t, i) => (
+          <a
+            href={t.href}
+            class:list={["group bg-bg p-5 hover:bg-raised transition-colors", tools.length % 2 === 1 && i === tools.length - 1 && "sm:col-span-2"]}
+          >
+            <div class="flex items-baseline justify-between gap-2">
+              <span class="font-semibold text-ink group-hover:text-accent transition-colors">{t.name}</span>
+              <span class="label text-muted group-hover:text-accent transition-colors">→</span>
+            </div>
+            <p class="mt-1 text-sm text-muted leading-relaxed">{t.desc}</p>
+          </a>
+        ))}
+      </section>
+
+      <section class="mt-12 border-t border-rule pt-6 max-w-2xl text-sm text-muted leading-relaxed">
+        <h2 class="label text-ink">Why privacy0?</h2>
+        <p class="mt-2">Privacy tools that upload your files are a contradiction. A redaction service
+        that receives your unredacted document, a metadata stripper that sees the originals, an
+        "encrypted" notes app that holds your keys: each one is the exact leak you were trying to
+        prevent. privacy0 does all of it in your browser. Your text, images and PDFs never leave the
+        device, there are no accounts, and DevTools → Network shows zero uploads while you work.</p>
+      </section>
+    </div>
+  </main>
+  <Footer />
+</Base>

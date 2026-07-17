@@ -1,0 +1,58 @@
+---
+import Base from '../../hubs/privacy0/layouts/Base.astro';
+import Header from '../../hubs/privacy0/components/Header.astro';
+import Footer from '../../hubs/privacy0/components/Footer.astro';
+import ToolLayout from '../../hubs/privacy0/components/ToolLayout.astro';
+---
+<Base
+  title="File Hash Checker (SHA-256 / SHA-1 / SHA-512) · privacy0"
+  description="Compute and verify SHA-1, SHA-256, SHA-384 or SHA-512 checksums of any file in your browser. The file is never uploaded."
+>
+  <Header />
+  <main class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8">
+    <ToolLayout name="File Hash Checker" trust="Files are read and hashed locally via Web Crypto. The bytes never leave your device — verify in DevTools → Network.">
+      <div slot="explainer">
+        <p class="mb-2">Drop in a file to compute its cryptographic checksum, then paste the publisher's expected hash to confirm the download wasn't corrupted or tampered with. SHA-256 is the usual choice; SHA-1 is offered for legacy checksums only.</p>
+        <p>Hashing runs entirely in your browser through the Web Crypto API — the file is never uploaded, so it's safe for private or sensitive files.</p>
+      </div>
+
+      <div class="max-w-2xl space-y-5">
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="text-xs text-muted">Algorithm:</span>
+          <div class="inline-flex bg-raised border border-rule rounded-sm p-0.5">
+            <button data-fh-algo="SHA-1" class="fh-algo-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors text-muted">SHA-1</button>
+            <button data-fh-algo="SHA-256" class="fh-algo-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors bg-bg text-accent">SHA-256</button>
+            <button data-fh-algo="SHA-384" class="fh-algo-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors text-muted">SHA-384</button>
+            <button data-fh-algo="SHA-512" class="fh-algo-btn px-3 py-1 text-xs font-medium rounded-sm transition-colors text-muted">SHA-512</button>
+          </div>
+        </div>
+
+        <label id="fh-drop" for="fh-file" class="flex flex-col items-center justify-center gap-1 border border-dashed border-rule rounded-lg py-10 px-4 text-center cursor-pointer hover:bg-raised transition-colors">
+          <span class="text-sm text-ink font-medium">Drop a file here, or click to choose</span>
+          <span id="fh-meta" class="text-xs font-mono text-muted">No file selected</span>
+          <input id="fh-file" type="file" class="hidden" />
+        </label>
+
+        <div class="rounded border border-rule bg-raised overflow-hidden">
+          <div class="px-4 py-2.5 border-b border-rule flex items-center justify-between">
+            <span class="label">Digest</span>
+            <button id="fh-copy" class="text-[10px] font-medium px-2 py-1 rounded-sm bg-bg border border-rule text-ink hover:bg-raised transition-colors">Copy</button>
+          </div>
+          <div id="fh-output" class="p-4 text-sm font-mono text-accent break-all min-h-[3rem] select-all"></div>
+          <div id="fh-error" class="hidden px-4 py-2 border-t border-err text-xs text-err font-mono"></div>
+        </div>
+
+        <div>
+          <label for="fh-expected" class="label mb-1 block">Verify against expected hash (optional)</label>
+          <input id="fh-expected" type="text" class="w-full border border-rule rounded px-3 py-2 text-sm font-mono bg-bg text-ink focus:outline-none focus:border-accent" placeholder="Paste the publisher's checksum to compare…" spellcheck="false" />
+          <p id="fh-verdict" class="text-xs font-mono mt-2"></p>
+        </div>
+      </div>
+    </ToolLayout>
+  </main>
+  <Footer />
+</Base>
+<script>
+  import { initFileHash } from '../../hubs/privacy0/scripts/tools/filehash';
+  initFileHash();
+</script>

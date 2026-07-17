@@ -1,0 +1,64 @@
+---
+import Base from '../../hubs/privacy0/layouts/Base.astro';
+import Header from '../../hubs/privacy0/components/Header.astro';
+import Footer from '../../hubs/privacy0/components/Footer.astro';
+import ToolLayout from '../../hubs/privacy0/components/ToolLayout.astro';
+---
+<Base
+  title="Image Steganography (hide text in a PNG) · privacy0"
+  description="Hide a secret message inside an image using LSB steganography, and extract hidden messages back out — entirely in your browser. No upload."
+>
+  <Header />
+  <main class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8">
+    <ToolLayout name="Image Steganography" trust="Images are processed on a canvas in your browser. Nothing is uploaded — verify in DevTools → Network.">
+      <div slot="explainer">
+        <p class="mb-2">This hides your text in the <em>least-significant bit</em> of each red, green and blue channel — a change too small to see. A 64-bit header records a marker and the message length so it can be read back exactly.</p>
+        <p class="mb-2">The output is always a <strong>PNG</strong>, because PNG is lossless. If you re-save the stego image as JPG (or a chat app re-compresses it), the hidden bits are destroyed and the message is lost. For real secrecy, encrypt the text first (try <a href="/privacy0/notes" class="text-accent underline">Encrypted Notes</a>) — steganography hides that a message exists, it doesn't encrypt it.</p>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-8 max-w-4xl">
+        <!-- Encode -->
+        <section class="space-y-4">
+          <h2 class="display text-lg">Hide a message</h2>
+          <div>
+            <label for="steg-enc-file" class="label mb-1 block">Cover image</label>
+            <input id="steg-enc-file" type="file" accept="image/*" class="block w-full text-sm text-muted file:btn file:mr-3 file:cursor-pointer" />
+            <p id="steg-capacity" class="text-xs font-mono text-muted mt-1"></p>
+          </div>
+          <div>
+            <label for="steg-message" class="label mb-1 block">Secret message</label>
+            <textarea id="steg-message" rows="4" class="w-full border border-rule rounded px-3 py-2 text-sm bg-bg text-ink focus:outline-none focus:border-accent resize-y" placeholder="Type the text to hide…"></textarea>
+          </div>
+          <button id="steg-encode-btn" class="btn w-full">Hide in image</button>
+          <p id="steg-enc-error" class="hidden text-xs text-err font-mono"></p>
+          <div id="steg-enc-result" class="hidden space-y-3">
+            <img id="steg-preview" alt="Stego image preview" class="max-w-full rounded border border-rule" />
+            <a id="steg-download" class="btn w-full" download="stego.png">Download stego.png</a>
+          </div>
+        </section>
+
+        <!-- Decode -->
+        <section class="space-y-4">
+          <h2 class="display text-lg">Reveal a message</h2>
+          <div>
+            <label for="steg-dec-file" class="label mb-1 block">Stego PNG</label>
+            <input id="steg-dec-file" type="file" accept="image/png" class="block w-full text-sm text-muted file:btn-secondary file:mr-3 file:cursor-pointer" />
+          </div>
+          <div class="rounded border border-rule bg-raised overflow-hidden">
+            <div class="px-4 py-2.5 border-b border-rule flex items-center justify-between">
+              <span class="label">Hidden message</span>
+              <button id="steg-dec-copy" class="text-[10px] font-medium px-2 py-1 rounded-sm bg-bg border border-rule text-ink hover:bg-raised transition-colors">Copy</button>
+            </div>
+            <textarea id="steg-dec-output" rows="6" readonly class="w-full p-4 bg-transparent text-sm font-mono text-ink resize-none focus:outline-none" placeholder="Choose a stego PNG to extract its hidden text…"></textarea>
+          </div>
+          <p id="steg-dec-error" class="hidden text-xs text-err font-mono"></p>
+        </section>
+      </div>
+    </ToolLayout>
+  </main>
+  <Footer />
+</Base>
+<script>
+  import { initSteg } from '../../hubs/privacy0/scripts/tools/steganography';
+  initSteg();
+</script>

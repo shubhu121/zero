@@ -1,0 +1,36 @@
+﻿---
+import Base from '../../hubs/privacy0/layouts/Base.astro';
+import Header from '../../hubs/privacy0/components/Header.astro';
+import Footer from '../../hubs/privacy0/components/Footer.astro';
+import ToolLayout from '../../hubs/privacy0/components/ToolLayout.astro';
+---
+<Base title="Metadata Stripper · privacy0" description="Inspect and remove EXIF data from images and metadata from PDFs. Download a clean copy.">
+  <Header />
+  <main class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8">
+    <ToolLayout name="Metadata Stripper">
+      <div slot="explainer">
+        <p class="mb-2">Supports JPEG, PNG, HEIC/HEIF images (via exifr) and PDF files (via pdf-lib).</p>
+        <p>Images are re-encoded via the browser canvas to strip metadata. The stripped file is lossless for PNG, 95% quality for JPEG. PDFs have all info-dict fields cleared.</p>
+      </div>
+
+      <div
+        id="meta-drop"
+        class="border-2 border-dashed border-rule rounded-lg p-12 text-center cursor-pointer hover:border-accent transition-colors mb-6"
+      >
+        <p class="text-muted text-sm mb-1">Drop an image or PDF here</p>
+        <p class="text-xs text-muted">or click to choose a file</p>
+        <input type="file" id="meta-file" accept="image/*,.pdf" class="hidden" />
+      </div>
+
+      <div id="meta-table" class="mb-4"></div>
+
+      <button id="meta-download" class="btn hidden">Download stripped file</button>
+    </ToolLayout>
+  </main>
+  <Footer />
+</Base>
+
+<script>
+  import { initMetadata } from '../../hubs/privacy0/scripts/tools/metadata';
+  initMetadata();
+</script>

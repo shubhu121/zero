@@ -1,0 +1,56 @@
+﻿---
+import Base from '../../hubs/privacy0/layouts/Base.astro';
+import Header from '../../hubs/privacy0/components/Header.astro';
+import Footer from '../../hubs/privacy0/components/Footer.astro';
+import ToolLayout from '../../hubs/privacy0/components/ToolLayout.astro';
+---
+<Base title="Encrypted Notes · privacy0" description="Write notes encrypted with AES-256-GCM and PBKDF2. Stored locally, never uploaded.">
+  <Header />
+  <main class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8">
+    <ToolLayout name="Encrypted Notes" trust="Notes are encrypted client-side with AES-256-GCM before being stored in localStorage. Your passphrase never leaves the page.">
+      <div slot="explainer">
+        <p class="mb-2">Each note is sealed with AES-256-GCM. The key is derived from your passphrase using PBKDF2 (310 000 iterations, SHA-256) with a random 16-byte salt.</p>
+        <p>A different ciphertext is produced each time you save, even for identical plaintext. Export/import to move notes between devices.</p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 gap-6 mb-8">
+        <div class="space-y-3">
+          <div>
+            <label for="note-title" class="label mb-1 block">Title</label>
+            <input type="text" id="note-title" class="w-full border border-rule rounded px-3 py-1.5 text-sm bg-bg text-ink focus:outline-none focus:border-accent" placeholder="My secret note" />
+          </div>
+          <div>
+            <label for="note-content" class="label mb-1 block">Content</label>
+            <textarea id="note-content" rows="6" class="w-full border border-rule rounded px-3 py-1.5 text-sm bg-bg text-ink focus:outline-none focus:border-accent resize-y" placeholder="Write your sensitive note here…"></textarea>
+          </div>
+          <div>
+            <label for="note-pass" class="label mb-1 block">Passphrase</label>
+            <input type="password" id="note-pass" class="w-full border border-rule rounded px-3 py-1.5 text-sm bg-bg text-ink focus:outline-none focus:border-accent" placeholder="Strong passphrase" autocomplete="new-password" />
+          </div>
+          <button id="note-save" class="btn w-full">Encrypt &amp; Save</button>
+          <p id="note-status" class="text-xs text-muted"></p>
+        </div>
+
+        <div>
+          <div class="flex items-center gap-2 mb-3">
+            <p class="label">Saved notes</p>
+            <div class="flex gap-2 ml-auto">
+              <button id="note-export" class="btn-secondary text-xs px-2 py-1">Export</button>
+              <label class="btn-secondary text-xs px-2 py-1 cursor-pointer">
+                Import
+                <input type="file" id="note-import" accept=".json" class="hidden" />
+              </label>
+            </div>
+          </div>
+          <div id="note-list" class="space-y-2"></div>
+        </div>
+      </div>
+    </ToolLayout>
+  </main>
+  <Footer />
+</Base>
+
+<script>
+  import { initNotes } from '../../hubs/privacy0/scripts/tools/notes';
+  initNotes();
+</script>
