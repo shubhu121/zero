@@ -1,0 +1,55 @@
+---
+import Base from '../../hubs/ai0/layouts/Base.astro';
+import Header from '../../hubs/ai0/components/Header.astro';
+import Footer from '../../hubs/ai0/components/Footer.astro';
+import ToolLayout from '../../hubs/ai0/components/ToolLayout.astro';
+import ModelLoader from '../../hubs/ai0/components/ModelLoader.astro';
+---
+<Base
+  title="Chat With Your PDF — 100% local, nothing uploaded | ai0"
+  description="Drop a PDF and ask questions. Embeddings, search and the language model all run in your browser — the document never leaves your device."
+>
+  <Header />
+  <main class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8">
+    <ToolLayout
+      name="doc q&a"
+      trust="Embeddings, retrieval and the LLM all run in your browser — the document never leaves your device.">
+      <div class="grid gap-5">
+        <ModelLoader />
+        <div id="dq-panel" class="hidden grid gap-4">
+          <label id="dq-drop" class="block text-center cursor-pointer border-2 border-dashed border-rule rounded-lg p-8 hover:border-accent transition-colors">
+            <input id="dq-input" type="file" accept="application/pdf,.pdf" class="sr-only" />
+            <div id="dq-empty">
+              <div class="display text-lg">drop a PDF, or click to choose</div>
+              <div class="label mt-2 normal-case tracking-normal">indexed locally · never uploaded</div>
+            </div>
+            <div id="dq-file" class="hidden">
+              <div id="dq-name" class="display text-base break-all"></div>
+            </div>
+          </label>
+          <div id="dq-status" class="label normal-case tracking-normal" aria-live="polite"></div>
+          <div class="flex gap-3 items-end">
+            <input id="dq-q" type="text" disabled placeholder="Ask about the document…"
+              class="flex-1 bg-bg border border-rule rounded px-3 py-2 text-sm" />
+            <button id="dq-ask" class="btn" disabled>Ask</button>
+          </div>
+          <div id="dq-answer-wrap" class="hidden">
+            <div class="label mb-2">answer</div>
+            <div id="dq-answer" class="bg-raised border border-rule rounded-sm p-4 text-sm whitespace-pre-wrap leading-relaxed"></div>
+            <div id="dq-sources" class="mt-3"></div>
+          </div>
+          <div id="dq-error" class="hidden text-err text-sm"></div>
+        </div>
+      </div>
+      <Fragment slot="explainer">
+        A full retrieval-augmented-generation pipeline in the tab: pdf.js extracts the text, it's
+        chunked and embedded with MiniLM, the most relevant passages are retrieved by cosine
+        similarity, and a local LLM answers with page citations. Nothing is uploaded.
+      </Fragment>
+    </ToolLayout>
+  </main>
+  <Footer />
+</Base>
+<script>
+  import '../../hubs/ai0/scripts/tools/docqa';
+</script>

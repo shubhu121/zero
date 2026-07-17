@@ -1,0 +1,48 @@
+---
+import Base from '../../hubs/ai0/layouts/Base.astro';
+import Header from '../../hubs/ai0/components/Header.astro';
+import Footer from '../../hubs/ai0/components/Footer.astro';
+import ToolLayout from '../../hubs/ai0/components/ToolLayout.astro';
+import ModelLoader from '../../hubs/ai0/components/ModelLoader.astro';
+---
+<Base
+  title="Local LLM Chat — runs on your GPU, no API key | ai0"
+  description="Chat with Llama, Qwen or Gemma entirely in your browser via WebGPU. No API key, no server, conversations never leave your device."
+>
+  <Header />
+  <main class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8">
+    <ToolLayout
+      name="chat"
+      trust="A local LLM running on your GPU via WebGPU. No API key, no server — the conversation never leaves this page.">
+      <div class="grid gap-5">
+        <ModelLoader />
+        <div id="chat-panel" class="hidden grid gap-4">
+          <details class="bg-raised border border-rule rounded-sm p-4">
+            <summary class="label cursor-pointer">system prompt</summary>
+            <textarea id="chat-system" rows="2"
+              class="block w-full mt-2 bg-bg border border-rule rounded p-2 text-sm"></textarea>
+          </details>
+          <div id="chat-list" class="bg-raised border border-rule rounded-sm p-4 max-h-[28rem] overflow-auto"></div>
+          <div class="flex gap-3 items-end">
+            <textarea id="chat-input" rows="2" placeholder="Message… (Ctrl/⌘+Enter to send)"
+              class="flex-1 bg-bg border border-rule rounded p-3 text-sm"></textarea>
+            <div class="flex flex-col gap-2">
+              <button id="chat-send" class="btn">Send</button>
+              <button id="chat-new" class="btn-secondary">new chat</button>
+            </div>
+          </div>
+          <div id="chat-status" class="label normal-case tracking-normal" aria-live="polite"></div>
+        </div>
+      </div>
+      <Fragment slot="explainer">
+        Powered by WebLLM (MLC) — the model runs in a WebGPU context in your tab. The first load
+        downloads and compiles the weights (cached afterwards); generation and your history stay
+        entirely on-device.
+      </Fragment>
+    </ToolLayout>
+  </main>
+  <Footer />
+</Base>
+<script>
+  import '../../hubs/ai0/scripts/tools/chat';
+</script>

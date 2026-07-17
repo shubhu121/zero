@@ -1,0 +1,19 @@
+/* ai0 — local-AI hub. Cyan identity (the standalone's accent, kept) on cool
+   blue-black neutrals — distinct from dev0 blue, web0 teal, data0 violet,
+   privacy0 emerald, ui0 amber. Semantic vars only. */
+:root, [data-theme="paper"] {
+  --bg: #ffffff; --bg-raised: #f4f7f8;
+  --ink: #18181b; --muted: #5b6470;
+  --accent: #0891b2; --accent-ink: #ffffff;     /* cyan-600 — AA on white */
+  --rule: rgba(24, 24, 27, 0.12); --rule-strong: #18181b;
+  --ok: #16a34a; --warn: #b45309; --err: #dc2626;
+}
+[data-theme="nocturne"] {
+  --bg: #080b10; --bg-raised: #0f141b;
+  --ink: #f4f4f5; --muted: #9aa3ad;
+  --accent: #22d3ee; --accent-ink: #080b10;     /* cyan-400 — pops on cool near-black */
+  --rule: rgba(244, 244, 245, 0.12); --rule-strong: #f4f4f5;
+  --ok: #4ade80; --warn: #fbbf24; --err: #f87171;
+}
+html { background: var(--bg); color: var(--ink); scrollbar-gutter: stable; }
+::selection { background: var(--accent); color: var(--accent-ink); }

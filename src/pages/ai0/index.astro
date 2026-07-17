@@ -1,0 +1,56 @@
+---
+import Base from '../../hubs/ai0/layouts/Base.astro';
+import Header from '../../hubs/ai0/components/Header.astro';
+import Footer from '../../hubs/ai0/components/Footer.astro';
+
+const tools = [
+  { href: '/ai0/doc-qa', name: 'doc q&a', desc: 'drop a PDF and ask — local RAG with page citations', hero: true },
+  { href: '/ai0/chat', name: 'chat', desc: 'Llama / Qwen / Gemma on your GPU', hero: false },
+  { href: '/ai0/playground', name: 'playground', desc: 'compare two local models side by side', hero: false },
+  { href: '/ai0/ocr', name: 'ocr', desc: 'on-device image OCR & captioning (Florence-2)', hero: false },
+];
+---
+<Base
+  title="ai0 — local AI in your browser, zero API keys"
+  description="LLM chat, PDF Q&A, prompt playground and OCR running entirely in your browser via WebGPU. No API keys; prompts and documents never leave your device."
+>
+  <Header />
+  <main class="suite-main flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8">
+    <div class="fade-in">
+      <section class="max-w-2xl">
+        <h1 class="display text-4xl sm:text-6xl tracking-tight leading-[1.05]">
+          Local AI.<br />
+          <span class="text-accent">Zero API keys.</span>
+        </h1>
+        <p class="mt-5 text-muted leading-relaxed text-lg">
+          Llama, Qwen and Gemma running on your GPU, in your browser. Chat, query your PDFs, compare
+          models and run OCR — prompts and documents never leave your device.
+        </p>
+        <p class="label mt-5">100% client-side · WebGPU + WebAssembly · no API keys · no trackers</p>
+      </section>
+
+      <section class="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-px bg-rule border border-rule rounded overflow-hidden">
+        {tools.map((t, i) => (
+          <a href={t.href} class:list={["group bg-bg p-5 hover:bg-raised transition-colors", (t.hero || i === tools.length - 1) && "sm:col-span-2"]}>
+            <div class="flex items-baseline justify-between gap-2">
+              <span class="font-semibold text-ink group-hover:text-accent transition-colors">
+                {t.name}{t.hero && <span class="label text-accent ml-2">hero</span>}
+              </span>
+              <span class="label text-muted group-hover:text-accent transition-colors">→</span>
+            </div>
+            <p class="mt-1 text-sm text-muted leading-relaxed">{t.desc}</p>
+          </a>
+        ))}
+      </section>
+
+      <section class="mt-12 border-t border-rule pt-6 max-w-2xl text-sm text-muted leading-relaxed">
+        <h2 class="label text-ink">How is this possible?</h2>
+        <p class="mt-2">Modern browsers expose the GPU through WebGPU. ai0 loads 4-bit-quantized LLMs with
+        WebLLM (MLC) and vision/embedding models through Transformers.js, compiling and running them on
+        your own hardware. The only network traffic is the one-time model download from the model CDNs —
+        everything else is local. Open DevTools → Network and watch the silence.</p>
+      </section>
+    </div>
+  </main>
+  <Footer />
+</Base>

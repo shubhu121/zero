@@ -1,0 +1,63 @@
+---
+import Base from '../../hubs/ai0/layouts/Base.astro';
+import Header from '../../hubs/ai0/components/Header.astro';
+import Footer from '../../hubs/ai0/components/Footer.astro';
+import ToolLayout from '../../hubs/ai0/components/ToolLayout.astro';
+---
+<Base
+  title="Prompt Playground — compare local models side by side | ai0"
+  description="Run the same prompt through two local LLMs and compare output and speed, entirely in your browser via WebGPU. No API keys."
+>
+  <Header />
+  <main class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8">
+    <ToolLayout
+      name="playground"
+      trust="Two local models, one prompt, side by side — all on your GPU. Models are GB-scale, so the columns run one after the other.">
+      <div class="grid gap-5">
+        <div id="pg-gpu-warn" class="hidden text-err text-sm"></div>
+        <div class="bg-raised border border-rule rounded-sm p-5 grid gap-4">
+          <label class="block">
+            <span class="label">prompt</span>
+            <textarea id="pg-prompt" rows="3" placeholder="Ask both models the same thing…"
+              class="block w-full mt-1 bg-bg border border-rule rounded p-3 text-sm"></textarea>
+          </label>
+          <details>
+            <summary class="label cursor-pointer">system prompt &amp; temperature</summary>
+            <div class="mt-3 grid gap-3">
+              <textarea id="pg-system" rows="2"
+                class="block w-full bg-bg border border-rule rounded p-2 text-sm">You are a concise, helpful assistant.</textarea>
+              <label class="flex items-center gap-3 text-sm">
+                <span class="label">temp</span>
+                <input id="pg-temp" type="range" min="0" max="1.5" step="0.1" value="0.7" class="accent-accent" />
+                <span id="pg-temp-val" class="label">0.7</span>
+              </label>
+            </div>
+          </details>
+          <div class="flex flex-wrap gap-3">
+            <button id="pg-run" class="btn">Run both</button>
+            <button id="pg-swap" class="btn-secondary">swap models</button>
+          </div>
+        </div>
+
+        <div class="grid gap-4 md:grid-cols-2">
+          {['a', 'b'].map((col) => (
+            <div class="bg-raised border border-rule rounded-sm p-4 grid gap-3">
+              <select id={`pg-model-${col}`} class="bg-bg border border-rule rounded px-3 py-2 text-sm"></select>
+              <div id={`pg-status-${col}`} class="label normal-case tracking-normal" aria-live="polite"></div>
+              <pre id={`pg-out-${col}`} class="text-sm whitespace-pre-wrap leading-relaxed min-h-[8rem] max-h-[26rem] overflow-auto"></pre>
+            </div>
+          ))}
+        </div>
+      </div>
+      <Fragment slot="explainer">
+        Because each model is gigabytes, only one can be resident on the GPU at a time — so the two
+        columns run sequentially (column A finishes, then B loads and runs). A fair way to feel the
+        quality/speed trade-off between, say, a 1B and a 3B model. Nothing leaves your device.
+      </Fragment>
+    </ToolLayout>
+  </main>
+  <Footer />
+</Base>
+<script>
+  import '../../hubs/ai0/scripts/tools/playground';
+</script>

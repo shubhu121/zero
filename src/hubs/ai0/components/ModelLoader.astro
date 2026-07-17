@@ -1,0 +1,22 @@
+---
+// Reusable model-loader panel — sits at the top of every tool page. Behaviour is
+// wired by initLoader() in ../lib/loaderui.ts against the ids below.
+---
+<div id="loader" class="bg-raised border border-rule rounded-sm p-5">
+  <div id="loader-gpu-warn" class="hidden text-err text-sm mb-3"></div>
+  <div class="flex flex-wrap items-end gap-4">
+    <label class="block">
+      <span class="label">model</span>
+      <select id="loader-model" class="block mt-1 bg-bg border border-rule rounded px-3 py-2 text-sm"></select>
+    </label>
+    <button id="loader-go" class="btn">Load model</button>
+    <span id="loader-size" class="label normal-case tracking-normal"></span>
+  </div>
+  <div id="loader-progress-wrap" class="hidden mt-4">
+    <div class="h-1.5 bg-bg border border-rule rounded overflow-hidden">
+      <div id="loader-bar" class="h-full bg-accent transition-[width]" style="width:0%"></div>
+    </div>
+    <div id="loader-text" class="label mt-2 normal-case tracking-normal" aria-live="polite"></div>
+  </div>
+  <div id="loader-storage" class="label mt-3 normal-case tracking-normal"></div>
+</div>

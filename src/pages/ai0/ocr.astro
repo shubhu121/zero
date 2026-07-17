@@ -1,0 +1,57 @@
+---
+import Base from '../../hubs/ai0/layouts/Base.astro';
+import Header from '../../hubs/ai0/components/Header.astro';
+import Footer from '../../hubs/ai0/components/Footer.astro';
+import ToolLayout from '../../hubs/ai0/components/ToolLayout.astro';
+---
+<Base
+  title="Image OCR & Captioning — on-device vision model | ai0"
+  description="Extract text or generate captions from images with Florence-2 running in your browser. No upload, no API key — the image never leaves your device."
+>
+  <Header />
+  <main class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8">
+    <ToolLayout
+      name="ocr"
+      trust="Florence-2 runs on-device (WebGPU, or WebAssembly as a fallback). The image never leaves your device.">
+      <div class="grid gap-5">
+        <label id="ocr-drop" class="block text-center cursor-pointer border-2 border-dashed border-rule rounded-lg p-8 hover:border-accent transition-colors">
+          <input id="ocr-input" type="file" accept="image/*" class="sr-only" />
+          <div id="ocr-empty">
+            <div class="display text-lg">drop an image, or click to choose</div>
+            <div class="label mt-2 normal-case tracking-normal">stays on your device</div>
+          </div>
+          <img id="ocr-preview" alt="preview" class="hidden max-h-72 mx-auto rounded border border-rule" />
+        </label>
+
+        <div class="flex flex-wrap items-end gap-4">
+          <label class="block">
+            <span class="label">task</span>
+            <select id="ocr-task" class="block mt-1 bg-bg border border-rule rounded px-3 py-2 text-sm">
+              <option value="ocr">OCR — extract text</option>
+              <option value="caption">caption — describe the image</option>
+            </select>
+          </label>
+          <button id="ocr-run" class="btn" disabled>Run</button>
+          <span id="ocr-status" class="label normal-case tracking-normal" aria-live="polite"></span>
+        </div>
+
+        <div id="ocr-result" class="hidden bg-raised border border-rule rounded-sm p-4">
+          <div class="flex items-center justify-between gap-3 mb-2">
+            <span class="label">result</span>
+            <button id="ocr-copy" class="btn-secondary">copy</button>
+          </div>
+          <pre id="ocr-out" class="text-sm whitespace-pre-wrap leading-relaxed"></pre>
+        </div>
+      </div>
+      <Fragment slot="explainer">
+        Florence-2 is a compact vision-language model; here it runs entirely in the browser through
+        Transformers.js. OCR pulls selectable text out of screenshots and photos; captioning describes
+        a scene. The first run downloads the model once and caches it.
+      </Fragment>
+    </ToolLayout>
+  </main>
+  <Footer />
+</Base>
+<script>
+  import '../../hubs/ai0/scripts/tools/ocr';
+</script>
