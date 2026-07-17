@@ -1,0 +1,50 @@
+---
+import Base from '../../hubs/media0/layouts/Base.astro';
+import Header from '../../hubs/media0/components/Header.astro';
+import Footer from '../../hubs/media0/components/Footer.astro';
+import MediaTool from '../../hubs/media0/components/MediaTool.astro';
+---
+<Base
+  title="Trim Video Online — cut a clip without uploading | media0"
+  description="Trim and cut video in your browser. Fast keyframe cut (no re-encode) or exact re-encoded cut. The file never leaves your device."
+>
+  <Header />
+  <main class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8">
+    <MediaTool name="trim" runLabel="Trim" accept="video/*">
+      <Fragment slot="options">
+        <video id="trim-preview" controls class="hidden w-full max-w-xl rounded border border-rule mb-4"></video>
+        <div class="flex flex-wrap items-end gap-4">
+          <label class="block">
+            <span class="label">start (mm:ss)</span>
+            <div class="flex gap-2 mt-1">
+              <input id="trim-start" type="text" inputmode="numeric" placeholder="0:00"
+                class="w-28 bg-bg border border-rule rounded px-3 py-2 text-sm" />
+              <button id="trim-set-start" type="button" class="btn-secondary">set</button>
+            </div>
+          </label>
+          <label class="block">
+            <span class="label">end (mm:ss)</span>
+            <div class="flex gap-2 mt-1">
+              <input id="trim-end" type="text" inputmode="numeric" placeholder="0:10"
+                class="w-28 bg-bg border border-rule rounded px-3 py-2 text-sm" />
+              <button id="trim-set-end" type="button" class="btn-secondary">set</button>
+            </div>
+          </label>
+        </div>
+        <label class="flex items-center gap-2 text-sm mt-4">
+          <input id="trim-reenc" type="checkbox" class="accent-accent" />
+          re-encode for an exact cut
+        </label>
+        <div class="label mt-2 normal-case tracking-normal">
+          Off: instant, snaps to the nearest keyframe. On: slower, cuts exactly where you asked.
+        </div>
+      </Fragment>
+      <Fragment slot="explainer">
+        The “set” buttons grab the current playhead time from the preview. Keyframe cuts stream-copy
+        (no quality loss, near-instant); exact cuts re-encode the video.
+      </Fragment>
+    </MediaTool>
+  </main>
+  <Footer />
+</Base>
+<script>import '../../hubs/media0/scripts/tools/trim';</script>

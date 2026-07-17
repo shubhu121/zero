@@ -1,0 +1,71 @@
+---
+import Base from '../../hubs/media0/layouts/Base.astro';
+import Header from '../../hubs/media0/components/Header.astro';
+import Footer from '../../hubs/media0/components/Footer.astro';
+import ToolLayout from '../../hubs/media0/components/ToolLayout.astro';
+---
+<Base
+  title="Transcribe Audio & Video — Whisper in your browser, no upload | media0"
+  description="Free transcription with timestamps and SRT/VTT export. Whisper runs on your device — a 2-hour podcast never leaves your laptop."
+>
+  <Header />
+  <main class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8">
+    <ToolLayout
+      name="transcribe"
+      trust="Whisper runs on your device — a 2-hour podcast never leaves your laptop. Verify: DevTools → Network.">
+      <div class="grid gap-5">
+        <label id="t-drop" class="drop-zone p-8 text-center cursor-pointer transition-colors">
+          <input id="t-input" type="file" accept="audio/*,video/*" class="sr-only" />
+          <div id="t-empty">
+            <div class="display text-lg">drop audio or video, or click to choose</div>
+            <div class="label mt-2 normal-case tracking-normal">stays on your device · Whisper runs locally</div>
+          </div>
+          <div id="t-file" class="hidden">
+            <div id="t-name" class="display text-base break-all"></div>
+            <div id="t-meta" class="label mt-1 normal-case tracking-normal"></div>
+          </div>
+        </label>
+
+        <video id="t-media" controls class="hidden w-full max-w-xl rounded border border-rule"></video>
+
+        <div class="flex flex-wrap items-center gap-4">
+          <button id="t-run" class="btn" disabled>Transcribe</button>
+          <span id="t-status" class="label normal-case tracking-normal" aria-live="polite"></span>
+        </div>
+
+        <div id="t-progress" class="hidden">
+          <div class="h-1.5 bg-raised border border-rule rounded overflow-hidden">
+            <div id="t-bar" class="h-full bg-accent transition-[width]" style="width:0%"></div>
+          </div>
+        </div>
+
+        <div id="t-error" class="hidden text-err text-sm"></div>
+
+        <div id="t-results" class="hidden grid gap-5">
+          <div class="flex flex-wrap gap-3">
+            <button id="t-srt" class="btn-secondary">↓ srt</button>
+            <button id="t-vtt" class="btn-secondary">↓ vtt</button>
+            <button id="t-txt" class="btn-secondary">↓ txt</button>
+            <button id="t-copy" class="btn-secondary">copy</button>
+          </div>
+          <div>
+            <div class="label mb-2">transcript</div>
+            <div id="t-text" class="rounded-sm border border-rule bg-raised p-4 text-sm whitespace-pre-wrap leading-relaxed max-h-72 overflow-auto"></div>
+          </div>
+          <div>
+            <div class="label mb-2">segments — click a timestamp to seek</div>
+            <div id="t-segments" class="rounded-sm border border-rule bg-raised p-4 max-h-80 overflow-auto"></div>
+          </div>
+        </div>
+      </div>
+      <Fragment slot="explainer">
+        Audio is normalized with FFmpeg.wasm to 16 kHz mono, then transcribed by OpenAI's Whisper
+        (base) running on-device via Transformers.js — WebGPU when available, WebAssembly otherwise.
+        The first run downloads the ~150 MB model once and caches it. Nothing is uploaded; export to
+        SRT, VTT or plain text.
+      </Fragment>
+    </ToolLayout>
+  </main>
+  <Footer />
+</Base>
+<script>import '../../hubs/media0/scripts/tools/transcribe';</script>

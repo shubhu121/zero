@@ -1,0 +1,33 @@
+---
+import Base from '../../hubs/media0/layouts/Base.astro';
+import Header from '../../hubs/media0/components/Header.astro';
+import Footer from '../../hubs/media0/components/Footer.astro';
+import MediaTool from '../../hubs/media0/components/MediaTool.astro';
+---
+<Base
+  title="Extract Audio from Video — MP3 / WAV / M4A, 100% local | media0"
+  description="Pull the audio track out of any video as MP3, WAV or M4A, entirely in your browser. Nothing is uploaded."
+>
+  <Header />
+  <main class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8">
+    <MediaTool name="extract audio" runLabel="Extract">
+      <Fragment slot="options">
+        <label class="block max-w-xs">
+          <span class="label">audio format</span>
+          <select id="fmt" class="block mt-1 w-full bg-bg border border-rule rounded px-3 py-2 text-sm">
+            <option value="mp3">MP3</option>
+            <option value="wav">WAV</option>
+            <option value="m4a">M4A (copy)</option>
+          </select>
+        </label>
+        <div id="fmt-note" class="label mt-2 normal-case tracking-normal"></div>
+      </Fragment>
+      <Fragment slot="explainer">
+        Strips the video stream and keeps the audio. M4A uses stream-copy (instant, no quality loss)
+        when the source audio is already AAC; MP3 and WAV re-encode.
+      </Fragment>
+    </MediaTool>
+  </main>
+  <Footer />
+</Base>
+<script>import '../../hubs/media0/scripts/tools/extract';</script>

@@ -1,0 +1,19 @@
+/* media0 — audio/video hub. Fuchsia identity to stand apart from the other
+   hubs (dev0 blue, web0 teal, data0 violet, privacy0 emerald, ui0 amber).
+   Cool zinc neutrals with a faint violet cast in the dark theme. Semantic vars only. */
+:root, [data-theme="paper"] {
+  --bg: #ffffff; --bg-raised: #faf7fb;
+  --ink: #18181b; --muted: #6b6b74;
+  --accent: #c026d3; --accent-ink: #ffffff;     /* fuchsia-600 — AA on white */
+  --rule: rgba(24, 24, 27, 0.12); --rule-strong: #18181b;
+  --ok: #16a34a; --warn: #b45309; --err: #dc2626;
+}
+[data-theme="nocturne"] {
+  --bg: #0b0a12; --bg-raised: #14121c;
+  --ink: #f4f4f5; --muted: #a1a1aa;
+  --accent: #e879f9; --accent-ink: #0b0a12;     /* fuchsia-400 — pops on violet near-black */
+  --rule: rgba(244, 244, 245, 0.14); --rule-strong: #f4f4f5;
+  --ok: #4ade80; --warn: #fbbf24; --err: #f87171;
+}
+html { background: var(--bg); color: var(--ink); scrollbar-gutter: stable; }
+::selection { background: var(--accent); color: var(--accent-ink); }

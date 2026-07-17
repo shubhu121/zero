@@ -1,0 +1,53 @@
+---
+import Base from '../../hubs/media0/layouts/Base.astro';
+import Header from '../../hubs/media0/components/Header.astro';
+import Footer from '../../hubs/media0/components/Footer.astro';
+import MediaTool from '../../hubs/media0/components/MediaTool.astro';
+---
+<Base
+  title="Video to GIF — high-quality palette, no upload | media0"
+  description="Turn a clip of any video into a high-quality GIF in your browser, using a two-pass colour palette. Nothing is uploaded."
+>
+  <Header />
+  <main class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8">
+    <MediaTool name="video → gif" runLabel="Make GIF" accept="video/*">
+      <Fragment slot="options">
+        <div class="flex flex-wrap items-end gap-4">
+          <label class="block">
+            <span class="label">start (mm:ss)</span>
+            <input id="gif-start" type="text" inputmode="numeric" placeholder="0:00"
+              class="block w-28 mt-1 bg-bg border border-rule rounded px-3 py-2 text-sm" />
+          </label>
+          <label class="block">
+            <span class="label">duration (s)</span>
+            <input id="gif-dur" type="number" min="0.5" step="0.5" value="3"
+              class="block w-24 mt-1 bg-bg border border-rule rounded px-3 py-2 text-sm" />
+          </label>
+          <label class="block">
+            <span class="label">fps</span>
+            <select id="gif-fps" class="block mt-1 bg-bg border border-rule rounded px-3 py-2 text-sm">
+              <option value="10">10</option>
+              <option value="15" selected>15</option>
+              <option value="20">20</option>
+            </select>
+          </label>
+          <label class="block">
+            <span class="label">width (px)</span>
+            <select id="gif-width" class="block mt-1 bg-bg border border-rule rounded px-3 py-2 text-sm">
+              <option value="320">320</option>
+              <option value="480" selected>480</option>
+              <option value="640">640</option>
+            </select>
+          </label>
+        </div>
+        <div class="label mt-3 normal-case tracking-normal">Height scales automatically to keep the aspect ratio.</div>
+      </Fragment>
+      <Fragment slot="explainer">
+        Two passes: one generates an optimal colour palette for your clip, the second renders the GIF
+        against it — much cleaner than a single-pass conversion. All in-browser via FFmpeg.wasm.
+      </Fragment>
+    </MediaTool>
+  </main>
+  <Footer />
+</Base>
+<script>import '../../hubs/media0/scripts/tools/gif';</script>

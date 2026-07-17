@@ -1,0 +1,39 @@
+---
+import Base from '../../hubs/media0/layouts/Base.astro';
+import Header from '../../hubs/media0/components/Header.astro';
+import Footer from '../../hubs/media0/components/Footer.astro';
+import MediaTool from '../../hubs/media0/components/MediaTool.astro';
+---
+<Base
+  title="Compress Video Online — shrink MP4s locally, no upload | media0"
+  description="Compress MP4 video in your browser with H.264 + adjustable quality and optional 720p downscale. The file never leaves your device."
+>
+  <Header />
+  <main class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8">
+    <MediaTool name="compress" runLabel="Compress" accept="video/*">
+      <Fragment slot="options">
+        <div class="flex flex-wrap items-end gap-6">
+          <label class="block max-w-xs">
+            <span class="label">quality</span>
+            <select id="level" class="block mt-1 w-full bg-bg border border-rule rounded px-3 py-2 text-sm">
+              <option value="light">light — best quality (CRF 23)</option>
+              <option value="balanced" selected>balanced (CRF 28)</option>
+              <option value="strong">strong — smallest (CRF 32)</option>
+            </select>
+          </label>
+          <label class="flex items-center gap-2 text-sm pb-2">
+            <input id="scale720" type="checkbox" class="accent-accent" />
+            downscale to 720p
+          </label>
+        </div>
+        <div class="label mt-3 normal-case tracking-normal">Expect roughly 40–70% smaller at “balanced”, depending on the source.</div>
+      </Fragment>
+      <Fragment slot="explainer">
+        Re-encodes with H.264 (libx264) at the chosen constant-rate-factor. Higher CRF = smaller file,
+        lower quality. All in-browser via FFmpeg.wasm.
+      </Fragment>
+    </MediaTool>
+  </main>
+  <Footer />
+</Base>
+<script>import '../../hubs/media0/scripts/tools/compress';</script>

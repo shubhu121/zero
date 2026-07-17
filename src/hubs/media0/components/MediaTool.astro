@@ -1,0 +1,55 @@
+---
+// Shared shell for every FFmpeg tool page: drop zone -> options slot -> run ->
+// progress -> result (download + before/after sizes + command line + log).
+// Tool scripts wire behaviour via mountTool() in ../scripts/toolkit.ts, which
+// targets the fixed ids below. Tool-specific controls go in the `options` slot.
+import ToolLayout from './ToolLayout.astro';
+interface Props { name: string; accept?: string; trust?: string; runLabel?: string; }
+const { name, accept = 'video/*,audio/*', trust, runLabel = 'Run' } = Astro.props;
+---
+<ToolLayout name={name} trust={trust}>
+  <div class="grid gap-5">
+    <label id="drop" class="drop-zone p-8 text-center cursor-pointer transition-colors">
+      <input id="file" type="file" accept={accept} class="sr-only" />
+      <div id="drop-empty">
+        <div class="display text-lg">drop a file, or click to choose</div>
+        <div class="label mt-2 normal-case tracking-normal">audio or video · stays on your device</div>
+      </div>
+      <div id="drop-file" class="hidden">
+        <div id="file-name" class="display text-base break-all"></div>
+        <div id="file-meta" class="label mt-1 normal-case tracking-normal"></div>
+      </div>
+    </label>
+
+    <div id="options" class="rounded-sm border border-rule bg-raised p-5"><slot name="options" /></div>
+
+    <div class="flex flex-wrap items-center gap-4">
+      <button id="run" class="btn" disabled>{runLabel}</button>
+      <span id="status" class="label normal-case tracking-normal" aria-live="polite"></span>
+    </div>
+
+    <div id="progress" class="hidden">
+      <div class="h-1.5 bg-raised border border-rule rounded overflow-hidden">
+        <div id="bar" class="h-full bg-accent transition-[width]" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div id="result" class="hidden rounded-sm border border-rule bg-raised p-5">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div id="result-sizes" class="label normal-case tracking-normal"></div>
+        <button id="download" class="btn">↓ download</button>
+      </div>
+      <div class="mt-4">
+        <div class="label mb-1">equivalent command</div>
+        <code id="cmd" class="block text-xs bg-bg border border-rule rounded p-3 overflow-x-auto whitespace-pre-wrap"></code>
+      </div>
+      <details class="mt-3">
+        <summary class="label cursor-pointer">ffmpeg log</summary>
+        <pre id="log" class="text-xs text-muted mt-2 max-h-48 overflow-auto whitespace-pre-wrap"></pre>
+      </details>
+    </div>
+
+    <div id="error" class="hidden text-err text-sm"></div>
+  </div>
+  <slot name="explainer" slot="explainer" />
+</ToolLayout>
